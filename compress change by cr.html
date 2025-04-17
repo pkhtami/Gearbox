@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاسبه فشار تراکم جدید</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            width: 200px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .results {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            display: none;
+        }
+        .result-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>محاسبه فشار تراکم جدید</h1>
+        
+        <div class="form-group">
+            <label for="p_old">فشار تراکم فعلی (PSI):</label>
+            <input type="number" id="p_old" step="1" placeholder="مثال: 200">
+            <div id="p_oldError" class="error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="cr_old">نسبت تراکم فعلی:</label>
+            <input type="number" id="cr_old" step="0.1" placeholder="مثال: 11">
+            <div id="cr_oldError" class="error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="cr_new">نسبت تراکم جدید:</label>
+            <input type="number" id="cr_new" step="0.1" placeholder="مثال: 12">
+            <div id="cr_newError" class="error"></div>
+        </div>
+        
+        <button id="calculateBtn">محاسبه</button>
+        
+        <div class="results" id="results">
+            <h3>نتایج محاسبات:</h3>
+            <div class="result-value">
+                فشار تراکم جدید: <span id="p_new">0</span> PSI
+            </div>
+            <div class="result-value">
+                تغییر فشار: <span id="p_change">0</span> PSI
+            </div>
+            <div class="result-value">
+                درصد تغییر: <span id="p_change_percent">0</span>%
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('calculateBtn').addEventListener('click', calculateCompressionPressure);
+        
+        function calculateCompressionPressure() {
+            // Get input values
+            const P_old = parseFloat(document.getElementById('p_old').value);
+            const CR_old = parseFloat(document.getElementById('cr_old').value);
+            const CR_new = parseFloat(document.getElementById('cr_new').value);
+            const gamma = 1.3; // Fixed gamma value
+            
+            // Validate inputs
+            let isValid = true;
+            
+            if (isNaN(P_old) || P_old <= 0) {
+                document.getElementById('p_oldError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                isValid = false;
+            } else {
+                document.getElementById('p_oldError').textContent = '';
+            }
+            
+            if (isNaN(CR_old) || CR_old <= 1) {
+                document.getElementById('cr_oldError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                isValid = false;
+            } else {
+                document.getElementById('cr_oldError').textContent = '';
+            }
+            
+            if (isNaN(CR_new) || CR_new <= 1) {
+                document.getElementById('cr_newError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                isValid = false;
+            } else {
+                document.getElementById('cr_newError').textContent = '';
+            }
+            
+            if (!isValid) {
+                document.getElementById('results').style.display = 'none';
+                return;
+            }
+            
+            // Perform calculation
+            const P_new = P_old * Math.pow(CR_new / CR_old, gamma);
+            const P_change = P_new - P_old;
+            const P_change_percent = (P_change / P_old) * 100;
+            
+            // Display results
+            document.getElementById('p_new').textContent = P_new.toFixed(1);
+            document.getElementById('p_change').textContent = P_change.toFixed(1);
+            document.getElementById('p_change_percent').textContent = P_change_percent.toFixed(1);
+            
+            // Show results
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+    <!DOCTYPE html>
+    <html lang="fa" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>محاسبه نسبت تراکم جدید پس از کف تراشی</title>
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f5f5f5;
+                margin: 0;
+                padding: 20px;
+                color: #333;
+            }
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background-color: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                color: #2c3e50;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .form-group {
+                margin-bottom: 15px;
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            input {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            button {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                padding: 10px 15px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                display: block;
+                margin: 20px auto;
+                width: 200px;
+            }
+            button:hover {
+                background-color: #2980b9;
+            }
+            .results {
+                margin-top: 30px;
+                border-top: 1px solid #eee;
+                padding-top: 20px;
+                display: none;
+            }
+            .result-value {
+                font-size: 24px;
+                font-weight: bold;
+                color: #2c3e50;
+                text-align: center;
+                margin: 20px 0;
+            }
+            .error {
+                color: #e74c3c;
+                font-size: 14px;
+                margin-top: 5px;
+            }
+            .checkbox-group {
+                margin: 15px 0;
+                display: flex;
+                align-items: center;
+            }
+            .checkbox-group input[type="checkbox"] {
+                width: auto;
+                margin-left: 10px;
+            }
+            .hidden {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>محاسبه نسبت تراکم جدید پس از کف تراشی</h1>
+
+            <div class="form-group">
+                <label for="bore">قطر سیلندر (میلی‌متر):</label>
+                <input type="number" id="bore" step="0.1" placeholder="مثال: 78.5">
+                <div id="boreError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="cr_old">نسبت تراکم فعلی:</label>
+                <input type="number" id="cr_old" step="0.1" placeholder="مثال: 9.6">
+                <div id="cr_oldError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="volume">حجم موتور (سی‌سی):</label>
+                <input type="number" id="volume" placeholder="مثال: 1587">
+                <div id="volumeError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="cylinders">تعداد سیلندر:</label>
+                <input type="number" id="cylinders" min="1" max="12" placeholder="مثال: 4">
+                <div id="cylindersError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="shaving">مقدار کف‌تراشی (میلی‌متر):</label>
+                <input type="number" id="shaving" step="0.05" placeholder="مثال: 0.4">
+                <div id="shavingError" class="error"></div>
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="calculatePressure" onchange="togglePressureField()">
+                <label for="calculatePressure">محاسبه تغییرات فشار کمپرس</label>
+            </div>
+
+            <div id="pressureField" class="form-group hidden">
+                <label for="currentPressure">فشار کمپرس فعلی (psi):</label>
+                <input type="number" id="currentPressure" step="0.1" placeholder="مثال: 180">
+                <div id="currentPressureError" class="error"></div>
+            </div>
+
+            <button onclick="calculateCompressionRatio()">محاسبه</button>
+
+            <div class="results" id="results">
+                <h3>نتایج محاسبات:</h3>
+                <div class="result-value">
+                    نسبت تراکم جدید: <span id="cr_new">0</span>:1
+                </div>
+                <div class="result-value">
+                    تغییر نسبت تراکم: <span id="cr_change">0</span>
+                </div>
+                <div class="result-value">
+                    حجم کم‌شده از هر سیلندر: <span id="deltaV">0</span> سی‌سی
+                </div>
+                <div class="result-value hidden" id="pressureResults">
+                    فشار کمپرس جدید: <span id="newPressure">0</span> psi
+                </div>
+                <div class="result-value hidden" id="pressureChangeResults">
+                    تغییرات فشار کمپرس: <span id="pressureChange">0</span> psi
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function togglePressureField() {
+                const checkbox = document.getElementById('calculatePressure');
+                const pressureField = document.getElementById('pressureField');
+                if (checkbox.checked) {
+                    pressureField.classList.remove('hidden');
+                } else {
+                    pressureField.classList.add('hidden');
+                }
+            }
+
+            function estimateNewCompressionPressure(P_old, CR_old, CR_new, gamma = 1.3) {
+                return P_old * Math.pow(CR_new / CR_old, gamma);
+            }
+
+            function calculateCompressionRatio() {
+                // Get input values
+                const bore = parseFloat(document.getElementById('bore').value);
+                const cr_old = parseFloat(document.getElementById('cr_old').value);
+                const volume = parseFloat(document.getElementById('volume').value);
+                const cylinders = parseInt(document.getElementById('cylinders').value);
+                const shaving = parseFloat(document.getElementById('shaving').value);
+                const calculatePressure = document.getElementById('calculatePressure').checked;
+                const currentPressure = parseFloat(document.getElementById('currentPressure')?.value);
+
+                // Validate inputs
+                let isValid = true;
+
+                if (isNaN(bore) || bore <= 0) {
+                    document.getElementById('boreError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                    isValid = false;
+                } else {
+                    document.getElementById('boreError').textContent = '';
+                }
+
+                if (isNaN(cr_old) || cr_old <= 1) {
+                    document.getElementById('cr_oldError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                    isValid = false;
+                } else {
+                    document.getElementById('cr_oldError').textContent = '';
+                }
+
+                if (isNaN(volume) || volume <= 0) {
+                    document.getElementById('volumeError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                    isValid = false;
+                } else {
+                    document.getElementById('volumeError').textContent = '';
+                }
+
+                if (isNaN(cylinders) || cylinders <= 0 || cylinders > 12) {
+                    document.getElementById('cylindersError').textContent = 'لطفاً مقدار معتبر وارد کنید (1-12)';
+                    isValid = false;
+                } else {
+                    document.getElementById('cylindersError').textContent = '';
+                }
+
+                if (isNaN(shaving) || shaving <= 0) {
+                    document.getElementById('shavingError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                    isValid = false;
+                } else {
+                    document.getElementById('shavingError').textContent = '';
+                }
+
+                if (calculatePressure && (isNaN(currentPressure) || currentPressure <= 0)) {
+                    document.getElementById('currentPressureError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                    isValid = false;
+                } else if (calculatePressure) {
+                    document.getElementById('currentPressureError').textContent = '';
+                }
+
+                if (!isValid) return;
+
+                // Perform calculations
+                const PI = Math.PI;
+
+                // حجم محفظه احتراق هر سیلندر
+                const Vc = volume / (cylinders * (cr_old - 1));
+
+                // حجم کم‌شده از هر سیلندر به خاطر کف‌تراشی
+                const deltaV = PI * Math.pow(bore / 2, 2) * shaving / 1000; // به سی‌سی
+
+                // نسبت تراکم جدید
+                const cr_new = ((cr_old - 1) * Vc) / (Vc - deltaV) + 1;
+
+                // Display results
+                document.getElementById('cr_new').textContent = cr_new.toFixed(2);
+                document.getElementById('cr_change').textContent = (cr_new - cr_old).toFixed(2);
+                document.getElementById('deltaV').textContent = deltaV.toFixed(2);
+
+                // Calculate and display pressure results if requested
+                if (calculatePressure) {
+                    const newPressure = estimateNewCompressionPressure(currentPressure, cr_old, cr_new);
+                    const pressureChange = newPressure - currentPressure;
+
+                    document.getElementById('newPressure').textContent = newPressure.toFixed(1);
+                    document.getElementById('pressureChange').textContent = pressureChange.toFixed(1);
+
+                    document.getElementById('pressureResults').classList.remove('hidden');
+                    document.getElementById('pressureChangeResults').classList.remove('hidden');
+                } else {
+                    document.getElementById('pressureResults').classList.add('hidden');
+                    document.getElementById('pressureChangeResults').classList.add('hidden');
+                }
+
+                // Show results
+                document.getElementById('results').style.display = 'block';
+            }
+        </script>
+    </body>
+    </html>

@@ -3,304 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ماشین حساب دنده خودرو</title>
+    <title>ماشین حساب ریمپ سهند</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             margin: 0;
-            padding: 20px;
-            color: #333;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+        
         .container {
+            width: 90%;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 30px auto;
             background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #3498db;
+        
+        header {
+            background: linear-gradient(to right, #4b6cb7, #182848);
             color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid #ffc107;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
             font-size: 16px;
-            display: block;
-            margin: 20px auto;
-            width: 200px;
-        }
-        button:hover {
-            background-color: #2980b9;
-        }
-        .results {
-            margin-top: 30px;
-            border-top: 1px solid #eee;
-            padding-top: 20px;
-        }
-        .result-section {
-            margin-bottom: 20px;
-        }
-        .result-section h3 {
-            color: #2c3e50;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-        }
-        .error {
-            color: #e74c3c;
-            font-size: 14px;
+            opacity: 0.9;
             margin-top: 5px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
+        
+        .file-list {
+            list-style-type: none;
+            padding: 20px;
+            margin: 0;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+        
+        .file-item {
+            padding: 15px 20px;
+            margin: 10px 0;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-right: 4px solid #4b6cb7;
+            display: flex;
+            align-items: center;
+        }
+        
+        .file-item:hover {
+            background-color: #e9ecef;
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .file-item i {
+            margin-left: 10px;
+            color: #4b6cb7;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            color: #343a40;
+        }
+        
+        footer {
             text-align: center;
+            padding: 15px;
+            color: #6c757d;
+            font-size: 14px;
+            border-top: 1px solid #eee;
         }
-        th {
-            background-color: #f2f2f2;
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>ماشین حساب دنده خودرو</h1>
+        <header>
+            <h1>ماشین حساب ریمپ سهند</h1>
+            <div class="subtitle">محاسبات تخصصی تنظیم موتور</div>
+        </header>
         
-        <div class="form-group">
-            <label for="gearCount">تعداد دنده:</label>
-            <input type="number" id="gearCount" min="1" max="10">
-        </div>
+        <ul class="file-list" id="fileList">
+            <!-- فایل ها توسط جاوااسکریپت اضافه می شوند -->
+        </ul>
         
-        <div id="gearRatiosContainer"></div>
-        
-        <div class="form-group">
-            <label for="finalDrive">ضریب نهائی (چهار رقمی):</label>
-            <input type="number" id="finalDrive" placeholder="مثال: 3700">
-            <div id="finalDriveError" class="error"></div>
-        </div>
-        
-        <div class="form-group">
-            <label for="rpm">کاتاف (RPM):</label>
-            <input type="number" id="rpm">
-        </div>
-        
-        <div class="form-group">
-            <label>تایر:</label>
-            <div style="display: flex; gap: 10px;">
-                <input type="number" id="tireWidth" placeholder="عرض (میلیمتر)" style="flex: 1;">
-                <input type="number" id="aspectRatio" placeholder="نسبت ارتفاع" style="flex: 1;">
-                <input type="number" id="rimDiameter" placeholder="قطر رینگ (اینچ)" style="flex: 1;">
-            </div>
-        </div>
-        
-        <button onclick="calculate()">محاسبه</button>
-        
-        <div class="results" id="results" style="display: none;">
-            <div class="result-section">
-                <h3>ضرایب دنده‌ها</h3>
-                <table id="gearRatiosTable">
-                    <thead>
-                        <tr>
-                            <th>دنده</th>
-                            <th>ضریب دنده</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            
-            <div class="result-section">
-                <h3>حداکثر سرعت در دنده‌ها</h3>
-                <table id="speedTable">
-                    <thead>
-                        <tr>
-                            <th>دنده</th>
-                            <th>سرعت (کیلومتر بر ساعت)</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            
-            <div class="result-section">
-                <h3>تغییر دور موتور هنگام تعویض دنده</h3>
-                <table id="rpmChangeTable">
-                    <thead>
-                        <tr>
-                            <th>از دنده</th>
-                            <th>به دنده</th>
-                            <th>تغییر RPM</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </div>
+        <footer>
+            طراحی شده توسط تیم فنی سهند © ۱۴۰۲
+        </footer>
     </div>
 
     <script>
-        document.getElementById('gearCount').addEventListener('input', function() {
-            const count = parseInt(this.value);
-            const container = document.getElementById('gearRatiosContainer');
-            container.innerHTML = '';
+        // لیست فایل ها با نام های فارسی
+        const files = [
+            { name: "محاسبه تغییرات کمپرس توسط CR", file: "compress change by cr.html" },
+            { name: "محاسبه تغییرات CR توسط کمپرس", file: "cr change by compress.html" },
+            { name: "محاسبه تغییرات CR توسط تریم (نسخه ۲)", file: "cr change by trim v2.html" },
+            { name: "محاسبات گیربکس", file: "gearbox calculation.html" },
+            { name: "محاسبه تریم مورد نیاز", file: "required trim.html" }
+        ];
+
+        // دریافت لیست فایل ها
+        const fileList = document.getElementById('fileList');
+
+        // ایجاد آیتم ها برای هر فایل
+        files.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.className = 'file-item';
             
-            if (count > 0 && count <= 10) {
-                for (let i = 1; i <= count; i++) {
-                    const div = document.createElement('div');
-                    div.className = 'form-group';
-                    div.innerHTML = `
-                        <label for="gearRatio${i}">ضریب دنده ${i} (چهار رقمی):</label>
-                        <input type="number" id="gearRatio${i}" placeholder="مثال: 3400">
-                        <div id="gearRatio${i}Error" class="error"></div>
-                    `;
-                    container.appendChild(div);
-                }
-            }
+            listItem.innerHTML = `
+                <i class="fas fa-calculator"></i>
+                <span class="file-name">${item.name}</span>
+            `;
+            
+            // اضافه کردن رویداد کلیک برای باز کردن فایل
+            listItem.addEventListener('click', () => {
+                window.location.href = item.file;
+            });
+            
+            fileList.appendChild(listItem);
         });
-        
-        function validateFourDigitNumber(input, errorElement) {
-            const value = input.value;
-            if (value.length !== 4 || isNaN(value)) {
-                errorElement.textContent = 'عدد باید چهار رقمی باشد';
-                return false;
-            }
-            
-            const lastTwoDigits = parseInt(value) % 100;
-            if (lastTwoDigits === 0) {
-                errorElement.textContent = 'دو رقم آخر نمی‌توانند صفر باشند';
-                return false;
-            }
-            
-            errorElement.textContent = '';
-            return true;
-        }
-        
-        function calculate() {
-            // Validate inputs
-            const gearCount = parseInt(document.getElementById('gearCount').value);
-            if (isNaN(gearCount) || gearCount < 1) {
-                alert('لطفاً تعداد دنده‌ها را به درستی وارد کنید');
-                return;
-            }
-            
-            const finalDrive = document.getElementById('finalDrive');
-            const finalDriveError = document.getElementById('finalDriveError');
-            if (!validateFourDigitNumber(finalDrive, finalDriveError)) return;
-            
-            const gearRatios = [];
-            let allGearRatiosValid = true;
-            
-            for (let i = 1; i <= gearCount; i++) {
-                const gearRatioInput = document.getElementById(`gearRatio${i}`);
-                const gearRatioError = document.getElementById(`gearRatio${i}Error`);
-                
-                if (!validateFourDigitNumber(gearRatioInput, gearRatioError)) {
-                    allGearRatiosValid = false;
-                } else {
-                    const value = gearRatioInput.value;
-                    const firstTwoDigits = Math.floor(parseInt(value) / 100);
-                    const lastTwoDigits = Math.floor(parseInt(value) % 100);
-                    gearRatios.push(lastTwoDigits / firstTwoDigits);
-                }
-            }
-            
-            if (!allGearRatiosValid) return;
-            
-            const rpm = parseFloat(document.getElementById('rpm').value);
-            if (isNaN(rpm)) {
-                alert('لطفاً کاتاف را به درستی وارد کنید');
-                return;
-            }
-            
-            const tireWidth = parseFloat(document.getElementById('tireWidth').value);
-            const aspectRatio = parseFloat(document.getElementById('aspectRatio').value);
-            const rimDiameter = parseFloat(document.getElementById('rimDiameter').value);
-            
-            if (isNaN(tireWidth) || isNaN(aspectRatio) || isNaN(rimDiameter)) {
-                alert('لطفاً مشخصات تایر را به درستی وارد کنید');
-                return;
-            }
-            
-            // Calculate final drive ratio
-            const finalDriveValue = finalDrive.value;
-            const fdFirstTwoDigits = Math.floor(parseInt(finalDriveValue) / 100);
-            const fdLastTwoDigits = Math.floor(parseInt(finalDriveValue) % 100);
-            const fd = fdLastTwoDigits / fdFirstTwoDigits;
-            
-            // Calculate tire dimensions
-            const rimDiameterMm = rimDiameter * 25.4;
-            const sidewallHeight = (tireWidth * aspectRatio) / 100.0;
-            const tyreDiameter = (sidewallHeight * 2) + rimDiameterMm;
-            const tyreCircumference = (Math.PI * tyreDiameter) / 1000;
-            
-            // Display gear ratios
-            const gearRatiosTable = document.querySelector('#gearRatiosTable tbody');
-            gearRatiosTable.innerHTML = '';
-            gearRatios.forEach((ratio, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${ratio.toFixed(4)}</td>
-                `;
-                gearRatiosTable.appendChild(row);
-            });
-            
-            // Calculate and display max speeds
-            const speedTable = document.querySelector('#speedTable tbody');
-            speedTable.innerHTML = '';
-            gearRatios.forEach((ratio, index) => {
-                const speed = (((rpm / ratio / fd) * tyreCircumference) / 1000) * 60;
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${speed.toFixed(2)}</td>
-                `;
-                speedTable.appendChild(row);
-            });
-            
-            // Calculate and display RPM changes
-            const rpmChangeTable = document.querySelector('#rpmChangeTable tbody');
-            rpmChangeTable.innerHTML = '';
-            for (let i = 0; i < gearRatios.length - 1; i++) {
-                const nextRPM = (rpm * gearRatios[i + 1]) / gearRatios[i];
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${i + 1}</td>
-                    <td>${i + 2}</td>
-                    <td>${nextRPM.toFixed(2)}</td>
-                `;
-                rpmChangeTable.appendChild(row);
-            }
-            
-            // Show results
-            document.getElementById('results').style.display = 'block';
-        }
     </script>
 </body>
 </html>

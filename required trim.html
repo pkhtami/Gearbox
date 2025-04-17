@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاسبه مقدار کفتراشی مورد نیاز</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            width: 200px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .results {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            display: none;
+        }
+        .result-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .radio-group {
+            margin: 15px 0;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .radio-option input[type="radio"] {
+            width: auto;
+            margin-left: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>محاسبه مقدار کفتراشی مورد نیاز</h1>
+
+        <div class="form-group">
+            <label for="bore">قطر سیلندر (میلی‌متر):</label>
+            <input type="number" id="bore" step="0.1" placeholder="مثال: 78.5">
+            <div id="boreError" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="volume">حجم موتور (سی‌سی):</label>
+            <input type="number" id="volume" placeholder="مثال: 1587">
+            <div id="volumeError" class="error"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="cylinders">تعداد سیلندر:</label>
+            <input type="number" id="cylinders" min="1" max="12" placeholder="مثال: 4">
+            <div id="cylindersError" class="error"></div>
+        </div>
+
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="radio" id="optionCR" name="calculationType" value="cr" checked onchange="toggleFields()">
+                <label for="optionCR">محاسبه کفتراشی برای تغییر نسبت تراکم</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="optionPressure" name="calculationType" value="pressure" onchange="toggleFields()">
+                <label for="optionPressure">محاسبه کفتراشی برای تغییر فشار کمپرس</label>
+            </div>
+        </div>
+
+        <div id="crFields">
+            <div class="form-group">
+                <label for="cr_old">نسبت تراکم فعلی:</label>
+                <input type="number" id="cr_old" step="0.1" placeholder="مثال: 9.6">
+                <div id="cr_oldError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="cr_new">نسبت تراکم مورد نظر:</label>
+                <input type="number" id="cr_new" step="0.1" placeholder="مثال: 10.5">
+                <div id="cr_newError" class="error"></div>
+            </div>
+        </div>
+
+        <div id="pressureFields" class="hidden">
+            <div class="form-group">
+                <label for="currentPressure">فشار کمپرس فعلی (psi):</label>
+                <input type="number" id="currentPressure" step="0.1" placeholder="مثال: 180">
+                <div id="currentPressureError" class="error"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="targetPressure">فشار کمپرس مورد نظر (psi):</label>
+                <input type="number" id="targetPressure" step="0.1" placeholder="مثال: 200">
+                <div id="targetPressureError" class="error"></div>
+            </div>
+        </div>
+
+        <button onclick="calculateRequiredShaving()">محاسبه</button>
+
+        <div class="results" id="results">
+            <h3>نتایج محاسبات:</h3>
+            <div class="result-value">
+                مقدار کفتراشی مورد نیاز: <span id="requiredShaving">0</span> میلی‌متر
+            </div>
+            <div class="result-value">
+                حجم کم‌شده از هر سیلندر: <span id="deltaV">0</span> سی‌سی
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleFields() {
+            const crOption = document.getElementById('optionCR').checked;
+            document.getElementById('crFields').style.display = crOption ? 'block' : 'none';
+            document.getElementById('pressureFields').style.display = crOption ? 'none' : 'block';
+        }
+
+        function calculateRequiredShaving() {
+            // Get common input values
+            const bore = parseFloat(document.getElementById('bore').value);
+            const volume = parseFloat(document.getElementById('volume').value);
+            const cylinders = parseInt(document.getElementById('cylinders').value);
+            const isCRCalculation = document.getElementById('optionCR').checked;
+
+            // Validate common inputs
+            let isValid = true;
+
+            if (isNaN(bore) || bore <= 0) {
+                document.getElementById('boreError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                isValid = false;
+            } else {
+                document.getElementById('boreError').textContent = '';
+            }
+
+            if (isNaN(volume) || volume <= 0) {
+                document.getElementById('volumeError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                isValid = false;
+            } else {
+                document.getElementById('volumeError').textContent = '';
+            }
+
+            if (isNaN(cylinders) || cylinders <= 0 || cylinders > 12) {
+                document.getElementById('cylindersError').textContent = 'لطفاً مقدار معتبر وارد کنید (1-12)';
+                isValid = false;
+            } else {
+                document.getElementById('cylindersError').textContent = '';
+            }
+
+            if (isCRCalculation) {
+                // CR calculation validation
+                const cr_old = parseFloat(document.getElementById('cr_old').value);
+                const cr_new = parseFloat(document.getElementById('cr_new').value);
+
+                if (isNaN(cr_old) || cr_old <= 1) {
+                    document.getElementById('cr_oldError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                    isValid = false;
+                } else {
+                    document.getElementById('cr_oldError').textContent = '';
+                }
+
+                if (isNaN(cr_new) || cr_new <= 1 || cr_new <= cr_old) {
+                    document.getElementById('cr_newError').textContent = 'نسبت تراکم جدید باید بیشتر از فعلی باشد';
+                    isValid = false;
+                } else {
+                    document.getElementById('cr_newError').textContent = '';
+                }
+            } else {
+                // Pressure calculation validation
+                const currentPressure = parseFloat(document.getElementById('currentPressure').value);
+                const targetPressure = parseFloat(document.getElementById('targetPressure').value);
+
+                if (isNaN(currentPressure) || currentPressure <= 0) {
+                    document.getElementById('currentPressureError').textContent = 'لطفاً مقدار معتبر وارد کنید';
+                    isValid = false;
+                } else {
+                    document.getElementById('currentPressureError').textContent = '';
+                }
+
+                if (isNaN(targetPressure) || targetPressure <= 0 || targetPressure <= currentPressure) {
+                    document.getElementById('targetPressureError').textContent = 'فشار جدید باید بیشتر از فعلی باشد';
+                    isValid = false;
+                } else {
+                    document.getElementById('targetPressureError').textContent = '';
+                }
+            }
+
+            if (!isValid) return;
+
+            // Perform calculations
+            const PI = Math.PI;
+            
+            if (isCRCalculation) {
+                const cr_old = parseFloat(document.getElementById('cr_old').value);
+                const cr_new = parseFloat(document.getElementById('cr_new').value);
+                
+                // حجم محفظه احتراق هر سیلندر
+                const Vc = volume / (cylinders * (cr_old - 1));
+                
+                // محاسبه حجم مورد نیاز برای رسیدن به نسبت تراکم جدید
+                const newVc = volume / (cylinders * (cr_new - 1));
+                const deltaV = Vc - newVc;
+                
+                // محاسبه مقدار کفتراشی مورد نیاز
+                const shaving = (deltaV * 1000) / (PI * Math.pow(bore / 2, 2));
+                
+                // نمایش نتایج
+                document.getElementById('requiredShaving').textContent = shaving.toFixed(3);
+                document.getElementById('deltaV').textContent = deltaV.toFixed(2);
+            } else {
+                const currentPressure = parseFloat(document.getElementById('currentPressure').value);
+                const targetPressure = parseFloat(document.getElementById('targetPressure').value);
+                const gamma = 1.3; // ضریب آدیاباتیک
+                
+                // محاسبه نسبت تراکم فعلی (فرضی)
+                const cr_old = 10; // این مقدار باید از کاربر گرفته شود یا محاسبه شود
+                // برای سادگی، ما نیاز به نسبت تراکم فعلی داریم که در این حالت باید از کاربر پرسیده شود
+                // این یک محدودیت در این روش است
+                
+                // محاسبه نسبت تراکم جدید مورد نیاز برای رسیدن به فشار مورد نظر
+                const cr_new = cr_old * Math.pow(targetPressure / currentPressure, 1/gamma);
+                
+                // حالا مانند روش قبل محاسبه می‌کنیم
+                const Vc = volume / (cylinders * (cr_old - 1));
+                const newVc = volume / (cylinders * (cr_new - 1));
+                const deltaV = Vc - newVc;
+                const shaving = (deltaV * 1000) / (PI * Math.pow(bore / 2, 2));
+                
+                // نمایش نتایج
+                document.getElementById('requiredShaving').textContent = shaving.toFixed(3);
+                document.getElementById('deltaV').textContent = deltaV.toFixed(2);
+            }
+
+            // Show results
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
