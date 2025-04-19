@@ -147,6 +147,35 @@
             
             fileList.appendChild(listItem);
         });
+        // تابع برای بارگذاری و اضافه کردن هدر
+function loadHeader() {
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.body.insertAdjacentHTML('afterbegin', data);
+        })
+        .catch(error => {
+            console.error('Error loading header:', error);
+        });
+}
+
+// تابع برای بارگذاری و اضافه کردن فوتر
+function loadFooter() {
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.body.insertAdjacentHTML('beforeend', data);
+        })
+        .catch(error => {
+            console.error('Error loading footer:', error);
+        });
+}
+
+// بارگذاری هدر و فوتر هنگام لود صفحه
+document.addEventListener('DOMContentLoaded', function() {
+    loadHeader();
+    loadFooter();
+});
     </script>
 </body>
 </html>
