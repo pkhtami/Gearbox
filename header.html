@@ -1,0 +1,83 @@
+<style>
+    /* استایل هدر */
+    header {
+        background: linear-gradient(to right, #4b6cb7, #182848);
+        color: white;
+        padding: 20px;
+        text-align: center;
+        border-bottom: 5px solid #ffc107;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .header-content h1 {
+        margin: 0;
+        font-size: 28px;
+        font-weight: 700;
+    }
+
+    .header-content .subtitle {
+        font-size: 16px;
+        opacity: 0.9;
+        margin-top: 5px;
+    }
+
+    .main-nav {
+        background-color: #182848;
+        padding: 10px 0;
+    }
+
+    .main-nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+    }
+
+    .main-nav li {
+        margin: 0 15px;
+    }
+
+    .main-nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        font-size: 14px;
+    }
+
+    .main-nav a:hover {
+        color: #ffc107;
+    }
+
+    /* رسپانسیو هدر */
+    @media (max-width: 768px) {
+        .header-content h1 {
+            font-size: 24px;
+        }
+        
+        .main-nav ul {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .main-nav li {
+            margin: 5px 0;
+        }
+    }
+</style>
+
+<header>
+    <div class="header-content">
+        <h1>ماشین حساب ریمپ سهند</h1>
+        <div class="subtitle">محاسبات تخصصی تنظیم موتور</div>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="index.html">صفحه اصلی</a></li>
+            <li><a href="about.html">درباره ما</a></li>
+            <li><a href="services.html">خدمات</a></li>
+            <li><a href="contact.html">تماس با ما</a></li>
+        </ul>
+    </nav>
+</header>
