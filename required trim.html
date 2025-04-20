@@ -272,19 +272,21 @@
             </div>
         </div>
 
-        <div id="pressureFields" class="hidden">
-                <i class="fas fa-tachometer-alt"></i>
-                <label for="currentPressure">فشار کمپرس فعلی (psi)</label>
-                <input type="number" id="currentPressure" step="0.1" placeholder="مثال: 180">
-                <div id="currentPressureError" class="error hidden"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید</div>
-            </div>
+      <div id="pressureFields" class="hidden">
+    <div class="form-group input-icon">
+        <i class="fas fa-tachometer-alt"></i>
+        <label for="currentPressure">فشار کمپرس فعلی (psi)</label>
+        <input type="number" id="currentPressure" step="0.1" placeholder="مثال: 180">
+        <div id="currentPressureError" class="error hidden"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید</div>
+    </div>
 
-            <div class="form-group input-icon">
-                <label for="targetPressure">فشار کمپرس مورد نظر (psi)</label>
-                <input type="number" id="targetPressure" step="0.1" placeholder="مثال: 200">
-                <div id="targetPressureError" class="error hidden"><i class="fas fa-exclamation-circle"></i> فشار جدید باید بیشتر از فعلی باشد</div>
-            </div>
-        </div>
+    <div class="form-group input-icon">
+        <i class="fas fa-tachometer-alt"></i>
+        <label for="targetPressure">فشار کمپرس مورد نظر (psi)</label>
+        <input type="number" id="targetPressure" step="0.1" placeholder="مثال: 200">
+        <div id="targetPressureError" class="error hidden"><i class="fas fa-exclamation-circle"></i> فشار جدید باید بیشتر از فعلی باشد</div>
+    </div>
+</div>
 
         <button onclick="calculateRequiredShaving()">
             <i class="fas fa-calculator"></i> محاسبه
