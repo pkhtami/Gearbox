@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مبدل هوشمند اسب بخار و گشتاور | ماشین حساب سهند</title>
+    <style>
+        :root {
+            --primary-color: #4b6cb7;
+            --secondary-color: #182848;
+            --accent-color: #ffc107;
+            --text-dark: #343a40;
+            --text-light: #f8f9fa;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--accent-color);
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .content {
+            padding: 25px;
+        }
+
+        .conversion-type {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            gap: 20px;
+        }
+
+        .conversion-option {
+            display: flex;
+            align-items: center;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .conversion-option:hover {
+            background-color: #e9ecef;
+        }
+
+        .conversion-option input {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
+        .conversion-option label {
+            cursor: pointer;
+            margin-bottom: 0;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.2);
+            outline: none;
+        }
+
+        button {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .input-section {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .active-section {
+            display: block;
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+            border-right: 4px solid var(--primary-color);
+        }
+
+        .result-value {
+            font-size: 24px;
+            color: var(--primary-color);
+            margin: 5px 0;
+        }
+
+        .unit {
+            color: #6c757d;
+            font-size: 16px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: #6c757d;
+            font-size: 14px;
+            border-top: 1px solid #eee;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .conversion-type {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .conversion-option {
+                margin-bottom: 0;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .conversion-type {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .conversion-option {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>مبدل هوشمند اسب بخار و گشتاور</h1>
+        <div class="subtitle">ماشین حساب تخصصی خودرو | سهند</div>
+    </header>
+
+    <div class="content">
+        <div class="conversion-type">
+            <div class="conversion-option">
+                <input type="radio" id="torqueToHp" name="conversionType" value="torqueToHp" checked onclick="toggleInputs()">
+                <label for="torqueToHp">گشتاور به اسب بخار</label>
+            </div>
+            <div class="conversion-option">
+                <input type="radio" id="hpToTorque" name="conversionType" value="hpToTorque" onclick="toggleInputs()">
+                <label for="hpToTorque">اسب بخار به گشتاور</label>
+            </div>
+        </div>
+
+        <div id="torqueToHpSection" class="input-section active-section">
+            <div class="form-group">
+                <label for="torqueNm">گشتاور (نیوتن متر)</label>
+                <input type="number" id="torqueNm" placeholder="مثال: 300">
+            </div>
+
+            <div class="form-group">
+                <label for="rpm1">دور موتور (RPM)</label>
+                <input type="number" id="rpm1" placeholder="مثال: 6000">
+            </div>
+        </div>
+
+        <div id="hpToTorqueSection" class="input-section">
+            <div class="form-group">
+                <label for="hp">اسب بخار (HP)</label>
+                <input type="number" id="hp" placeholder="مثال: 200">
+            </div>
+
+            <div class="form-group">
+                <label for="rpm2">دور موتور (RPM)</label>
+                <input type="number" id="rpm2" placeholder="مثال: 5000">
+            </div>
+        </div>
+
+        <button onclick="calculate()">محاسبه</button>
+
+        <div id="result" class="result">
+            <div>نتیجه محاسبه:</div>
+            <div class="result-value" id="resultValue"></div>
+            <div class="unit" id="resultUnit"></div>
+        </div>
+    </div>
+
+    <footer>
+        طراحی شده توسط تیم فنی سهند © ۱۴۰۲
+    </footer>
+</div>
+
+<script>
+    function toggleInputs() {
+        const torqueToHpChecked = document.getElementById('torqueToHp').checked;
+
+        document.getElementById('torqueToHpSection').classList.toggle('active-section', torqueToHpChecked);
+        document.getElementById('hpToTorqueSection').classList.toggle('active-section', !torqueToHpChecked);
+
+        // پاک کردن نتایج قبلی هنگام تغییر حالت
+        const resultDiv = document.getElementById('result');
+        resultDiv.style.display = 'none';
+        resultDiv.style.animation = 'none';
+    }
+
+    function calculate() {
+        const torqueToHpChecked = document.getElementById('torqueToHp').checked;
+        let result, unit;
+
+        if (torqueToHpChecked) {
+            const torqueNm = parseFloat(document.getElementById('torqueNm').value);
+            const rpm = parseFloat(document.getElementById('rpm1').value);
+
+            if (isNaN(torqueNm) || isNaN(rpm)) {
+                alert("لطفاً مقادیر گشتاور و دور موتور را وارد کنید");
+                return;
+            }
+
+            result = (torqueNm * rpm) / 7127;
+            unit = "اسب بخار (HP)";
+        } else {
+            const hp = parseFloat(document.getElementById('hp').value);
+            const rpm = parseFloat(document.getElementById('rpm2').value);
+
+            if (isNaN(hp) || isNaN(rpm)) {
+                alert("لطفاً مقادیر اسب بخار و دور موتور را وارد کنید");
+                return;
+            }
+
+            result = (hp * 7127) / rpm;
+            unit = "نیوتن متر (Nm)";
+        }
+
+        document.getElementById('resultValue').textContent = result.toFixed(2);
+        document.getElementById('resultUnit').textContent = unit;
+
+        // نمایش بخش نتایج با انیمیشن
+        const resultDiv = document.getElementById('result');
+        resultDiv.style.display = 'block';
+        resultDiv.style.animation = 'none';
+        setTimeout(() => {
+            resultDiv.style.animation = 'fadeIn 0.5s ease forwards';
+        }, 10);
+    }
+
+    // امکان استفاده از کلید Enter برای محاسبه
+    document.querySelectorAll('input').forEach(input => {
+        input.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                calculate();
+            }
+        });
+    });
+</script>
+</body>
+</html>
