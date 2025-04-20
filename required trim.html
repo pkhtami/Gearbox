@@ -182,10 +182,9 @@
         }
 
         .input-icon i {
-            
+
             left: 15px;
             top: 50%;
-            transform: translateY(-50%);
             color: var(--primary-color);
         }
 
@@ -231,21 +230,18 @@
 
     <div class="form-container">
         <div class="form-group input-icon">
-            <i class="fas fa-ruler"></i>
             <label for="bore">قطر سیلندر (میلی‌متر)</label>
             <input type="number" id="bore" step="0.1" placeholder="مثال: 78.5">
             <div id="boreError" class="error hidden"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید</div>
         </div>
 
         <div class="form-group input-icon">
-            <i class="fas fa-gas-pump"></i>
             <label for="volume">حجم موتور (سی‌سی)</label>
             <input type="number" id="volume" placeholder="مثال: 1587">
             <div id="volumeError" class="error hidden"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید</div>
         </div>
 
         <div class="form-group input-icon">
-            <i class="fas fa-fire"></i>
             <label for="cylinders">تعداد سیلندر</label>
             <input type="number" id="cylinders" min="1" max="12" placeholder="مثال: 4">
             <div id="cylindersError" class="error hidden"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید (1-12)</div>
@@ -264,14 +260,12 @@
 
         <div id="crFields">
             <div class="form-group input-icon">
-                <i class="fas fa-compress-alt"></i>
                 <label for="cr_old">نسبت تراکم فعلی</label>
                 <input type="number" id="cr_old" step="0.1" placeholder="مثال: 9.6">
                 <div id="cr_oldError" class="error hidden"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید</div>
             </div>
 
             <div class="form-group input-icon">
-                <i class="fas fa-compress-arrows-alt"></i>
                 <label for="cr_new">نسبت تراکم مورد نظر</label>
                 <input type="number" id="cr_new" step="0.1" placeholder="مثال: 10.5">
                 <div id="cr_newError" class="error hidden"><i class="fas fa-exclamation-circle"></i> نسبت تراکم جدید باید بیشتر از فعلی باشد</div>
@@ -279,7 +273,6 @@
         </div>
 
         <div id="pressureFields" class="hidden">
-            <div class="form-group input-icon">
                 <i class="fas fa-tachometer-alt"></i>
                 <label for="currentPressure">فشار کمپرس فعلی (psi)</label>
                 <input type="number" id="currentPressure" step="0.1" placeholder="مثال: 180">
@@ -287,7 +280,6 @@
             </div>
 
             <div class="form-group input-icon">
-                <i class="fas fa-tachometer-alt"></i>
                 <label for="targetPressure">فشار کمپرس مورد نظر (psi)</label>
                 <input type="number" id="targetPressure" step="0.1" placeholder="مثال: 200">
                 <div id="targetPressureError" class="error hidden"><i class="fas fa-exclamation-circle"></i> فشار جدید باید بیشتر از فعلی باشد</div>
