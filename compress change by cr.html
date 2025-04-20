@@ -3,104 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاسبه فشار تراکم جدید</title>
+    <title>محاسبه کمپرس جدید</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #4b6cb7;
+            --secondary-color: #182848;
+            --accent-color: #ffc107;
+            --text-color: #2c3e50;
+            --light-bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --error-color: #e74c3c;
+            --success-color: #2ecc71;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #c3cfe2 100%);
             margin: 0;
-            padding: 20px;
-            color: #333;
+            padding: 0;
+            min-height: 100vh;
+            color: var(--text-color);
         }
+
         .container {
+            width: 90%;
             max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
+            margin: 30px auto;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding-bottom: 20px;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #2c3e50;
             text-align: center;
-            margin-bottom: 30px;
+            border-bottom: 5px solid var(--accent-color);
         }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .form-container {
+            padding: 20px;
+        }
+
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            position: relative;
         }
+
         label {
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
         }
+
         input {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             box-sizing: border-box;
+            font-size: 16px;
+            transition: all 0.3s ease;
         }
+
+        input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.2);
+        }
+
         button {
-            background-color: #3498db;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
+            padding: 12px 25px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
+            font-weight: 600;
             display: block;
-            margin: 20px auto;
+            margin: 30px auto;
             width: 200px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         button:hover {
-            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
+
+        button:active {
+            transform: translateY(0);
+        }
+
         .results {
             margin-top: 30px;
             border-top: 1px solid #eee;
             padding-top: 20px;
             display: none;
+            animation: fadeIn 0.5s ease;
         }
+
         .result-value {
             font-size: 24px;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--primary-color);
             text-align: center;
             margin: 20px 0;
+            padding: 15px;
+            background-color: rgba(75, 108, 183, 0.1);
+            border-radius: 8px;
+            border-right: 4px solid var(--primary-color);
         }
+
         .error {
-            color: #e74c3c;
+            color: var(--error-color);
             font-size: 14px;
             margin-top: 5px;
+            display: none;
+            align-items: center;
+        }
+
+        .error i {
+            margin-left: 5px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+<div class="container">
+    <header>
         <h1>محاسبه فشار تراکم جدید</h1>
-        
+        <div class="subtitle">محاسبات تخصصی تنظیم موتور</div>
+    </header>
+
+    <div class="form-container">
         <div class="form-group">
-            <label for="p_old">فشار تراکم فعلی (PSI):</label>
+            <label for="p_old">فشار تراکم فعلی (PSI)</label>
             <input type="number" id="p_old" step="1" placeholder="مثال: 200">
-            <div id="p_oldError" class="error"></div>
+            <div id="p_oldError" class="error"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید</div>
         </div>
         
         <div class="form-group">
-            <label for="cr_old">نسبت تراکم فعلی:</label>
+            <label for="cr_old">نسبت تراکم فعلی</label>
             <input type="number" id="cr_old" step="0.1" placeholder="مثال: 11">
-            <div id="cr_oldError" class="error"></div>
+            <div id="cr_oldError" class="error"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید</div>
         </div>
         
         <div class="form-group">
-            <label for="cr_new">نسبت تراکم جدید:</label>
+            <label for="cr_new">نسبت تراکم جدید</label>
             <input type="number" id="cr_new" step="0.1" placeholder="مثال: 12">
-            <div id="cr_newError" class="error"></div>
+            <div id="cr_newError" class="error"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید</div>
         </div>
         
-        <button id="calculateBtn">محاسبه</button>
+        <button id="calculateBtn">
+            <i class="fas fa-calculator"></i> محاسبه
+        </button>
         
         <div class="results" id="results">
-            <h3>نتایج محاسبات:</h3>
+            <h3 style="text-align: center; color: var(--secondary-color);">نتایج محاسبات</h3>
             <div class="result-value">
                 فشار تراکم جدید: <span id="p_new">0</span> PSI
             </div>
@@ -112,59 +209,66 @@
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        document.getElementById('calculateBtn').addEventListener('click', calculateCompressionPressure);
-        
-        function calculateCompressionPressure() {
-            // Get input values
-            const P_old = parseFloat(document.getElementById('p_old').value);
-            const CR_old = parseFloat(document.getElementById('cr_old').value);
-            const CR_new = parseFloat(document.getElementById('cr_new').value);
-            const gamma = 1.3; // Fixed gamma value
-            
-            // Validate inputs
-            let isValid = true;
-            
-            if (isNaN(P_old) || P_old <= 0) {
-                document.getElementById('p_oldError').textContent = 'لطفاً مقدار معتبر وارد کنید';
-                isValid = false;
-            } else {
-                document.getElementById('p_oldError').textContent = '';
-            }
-            
-            if (isNaN(CR_old) || CR_old <= 1) {
-                document.getElementById('cr_oldError').textContent = 'لطفاً مقدار معتبر وارد کنید';
-                isValid = false;
-            } else {
-                document.getElementById('cr_oldError').textContent = '';
-            }
-            
-            if (isNaN(CR_new) || CR_new <= 1) {
-                document.getElementById('cr_newError').textContent = 'لطفاً مقدار معتبر وارد کنید';
-                isValid = false;
-            } else {
-                document.getElementById('cr_newError').textContent = '';
-            }
-            
-            if (!isValid) {
-                document.getElementById('results').style.display = 'none';
-                return;
-            }
-            
-            // Perform calculation
-            const P_new = P_old * Math.pow(CR_new / CR_old, gamma);
-            const P_change = P_new - P_old;
-            const P_change_percent = (P_change / P_old) * 100;
-            
-            // Display results
-            document.getElementById('p_new').textContent = P_new.toFixed(1);
-            document.getElementById('p_change').textContent = P_change.toFixed(1);
-            document.getElementById('p_change_percent').textContent = P_change_percent.toFixed(1);
-            
-            // Show results
-            document.getElementById('results').style.display = 'block';
+<script>
+    // Hide all error messages initially
+    document.querySelectorAll('.error').forEach(el => {
+        el.style.display = 'none';
+    });
+
+    document.getElementById('calculateBtn').addEventListener('click', calculateCompressionPressure);
+    
+    function validateInput(inputId, errorId, condition) {
+        const input = document.getElementById(inputId);
+        const errorElement = document.getElementById(errorId);
+        const value = parseFloat(input.value);
+
+        if (isNaN(value) || condition(value)) {
+            errorElement.style.display = 'flex';
+            input.style.borderColor = 'var(--error-color)';
+            return false;
+        } else {
+            errorElement.style.display = 'none';
+            input.style.borderColor = '#ddd';
+            return true;
         }
-    </script>
+    }
+    
+    function calculateCompressionPressure() {
+        // Validate inputs
+        const isValidPold = validateInput('p_old', 'p_oldError', (v) => v <= 0);
+        const isValidCrOld = validateInput('cr_old', 'cr_oldError', (v) => v <= 1);
+        const isValidCrNew = validateInput('cr_new', 'cr_newError', (v) => v <= 1);
+
+        if (!isValidPold || !isValidCrOld || !isValidCrNew) {
+            document.getElementById('results').style.display = 'none';
+            return;
+        }
+        
+        // Get input values
+        const P_old = parseFloat(document.getElementById('p_old').value);
+        const CR_old = parseFloat(document.getElementById('cr_old').value);
+        const CR_new = parseFloat(document.getElementById('cr_new').value);
+        const gamma = 1.3; // Fixed gamma value
+        
+        // Perform calculation
+        const P_new = P_old * Math.pow(CR_new / CR_old, gamma);
+        const P_change = P_new - P_old;
+        const P_change_percent = (P_change / P_old) * 100;
+        
+        // Display results
+        document.getElementById('p_new').textContent = P_new.toFixed(1);
+        document.getElementById('p_change').textContent = P_change.toFixed(1);
+        document.getElementById('p_change_percent').textContent = P_change_percent.toFixed(1);
+        
+        // Show results with animation
+        const results = document.getElementById('results');
+        results.style.display = 'block';
+        results.style.animation = 'none';
+        void results.offsetWidth; // Trigger reflow
+        results.style.animation = 'fadeIn 0.5s ease';
+    }
+</script>
 </body>
 </html>
