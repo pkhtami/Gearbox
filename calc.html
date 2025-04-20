@@ -4,28 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ماشین حساب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        @font-face {
-            font-family: 'Vazir';
-            src: url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.eot');
-            src: url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.eot?#iefix') format('embedded-opentype'),
-            url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.woff2') format('woff2'),
-            url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.woff') format('woff'),
-            url('https://cdn.fontcdn.ir/Font/Persian/Vazir/Vazir.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
+        :root {
+            --primary-color: #4b6cb7;
+            --secondary-color: #182848;
+            --accent-color: #ffc107;
+            --text-color: #2c3e50;
+            --light-bg: #f5f7fa;
+            --card-bg: #ffffff;
+            --error-color: #e74c3c;
+            --success-color: #2ecc71;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Vazir', Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             user-select: none;
         }
 
         body {
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #c3cfe2 100%);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -36,16 +37,24 @@
         .calculator {
             width: 100%;
             max-width: 400px;
-            background-color: #2c3e50;
+            background-color: var(--card-bg);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
+        header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 3px solid var(--accent-color);
+        }
+
         .display {
             padding: 20px;
-            background-color: #34495e;
+            background-color: var(--secondary-color);
             color: white;
         }
 
@@ -80,17 +89,19 @@
             outline: none;
             padding: 15px 0;
             font-size: 20px;
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
-            background-color: #ecf0f1;
-            color: #2c3e50;
+            background-color: var(--light-bg);
+            color: var(--text-color);
             transition: all 0.2s ease;
             font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
 
         button:hover {
             background-color: #d6dbdf;
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
         }
 
         button:active {
@@ -98,49 +109,48 @@
         }
 
         .operator {
-            background-color: #3498db;
+            background-color: var(--primary-color);
             color: white;
         }
 
         .operator:hover {
-            background-color: #2980b9;
+            background-color: #3a5a9f;
         }
 
         .function {
-            background-color: #9b59b6;
-            color: white;
+            background-color: var(--accent-color);
+            color: var(--text-color);
         }
 
         .function:hover {
-            background-color: #8e44ad;
+            background-color: #e6b800;
         }
 
         .equals {
-            background-color: #2ecc71;
+            background-color: var(--success-color);
             color: white;
-
         }
 
         .equals:hover {
-            background-color: #27ae60;
+            background-color: #24a15a;
         }
 
         .clear, .delete {
-            background-color: #e74c3c;
+            background-color: var(--error-color);
             color: white;
         }
 
         .clear:hover, .delete:hover {
-            background-color: #c0392b;
+            background-color: #d62c1a;
         }
 
         .constant {
-            background-color: #3498db;
+            background-color: #9b59b6;
             color: white;
         }
 
         .constant:hover {
-            background-color: #16a085;
+            background-color: #8e44ad;
         }
 
         @media (max-width: 400px) {
@@ -157,12 +167,15 @@
 </head>
 <body>
 <div class="calculator">
+    <header>
+        <h2>ماشین حساب مهندسی</h2>
+    </header>
     <div class="display">
         <div class="calculation-display" id="calculation"></div>
         <div class="result-display" id="result">0</div>
     </div>
     <div class="buttons">
-        <button class="delete" onclick="deleteLastChar()">⌫</button>
+        <button class="delete" onclick="deleteLastChar()"><i class="fas fa-backspace"></i></button>
         <button class="clear" onclick="clearAll()">C</button>
         <button class="operator" onclick="addToCalculation('(')">)</button>
         <button class="operator" onclick="addToCalculation('/')">/</button>
@@ -181,6 +194,7 @@
         <button onclick="addToCalculation('5')">5</button>
         <button onclick="addToCalculation('4')">4</button>
         <button class="operator" onclick="addToCalculation('×')">×</button>
+
         <button onclick="addToCalculation('3')">3</button>
         <button onclick="addToCalculation('2')">2</button>
         <button onclick="addToCalculation('1')">1</button>
@@ -272,30 +286,20 @@
 
     function addPercentage() {
         try {
-            // Split calculation into parts (numbers and operators)
             const parts = calculation.split(/([\+\-\×\/])/).filter(part => part.trim() !== '');
 
-            // If no operator exists (e.g., "50%" → 0.5)
             if (parts.length === 1) {
                 const num = parseFloat(parts[0]) || 0;
                 result = (num / 100).toString();
                 calculation = result;
             }
-            // If there's an operator (e.g., "40 + 50%")
             else if (parts.length >= 3) {
                 const lastNumber = parseFloat(parts[parts.length - 1]) || 0;
                 const prevNumber = parseFloat(parts[parts.length - 3]) || 0;
 
-                // Calculate the percentage value (e.g., 50% of 40 → 20)
                 const percentageValue = (prevNumber * lastNumber / 100);
-
-                // Replace the last number with its percentage value
                 parts[parts.length - 1] = percentageValue.toString();
-
-                // Update calculation (e.g., "40 + 20" instead of "40 + 50%")
                 calculation = parts.join(' ');
-
-                // Show the percentage value (20) in the result display
                 result = percentageValue.toString();
             }
 
@@ -306,15 +310,14 @@
             updateDisplay();
         }
     }
+
     function calculate() {
         try {
-            // Replace display symbols with JavaScript math operations
             let expr = calculation
                 .replace(/×/g, '*')
                 .replace(/π/g, Math.PI.toString())
                 .replace(/e/g, Math.E.toString());
 
-            // Evaluate the expression
             result = eval(expr).toString();
             calculation = '';
             waitingForOperand = false;
@@ -325,7 +328,6 @@
         }
     }
 
-    // Keyboard support
     document.addEventListener('keydown', (e) => {
         const key = e.key;
 
@@ -347,17 +349,10 @@
             addToCalculation('(');
         } else if (key === '(') {
             addToCalculation(')');
-        } else if (key === '%') {
-            addPercentage();
-        }else if (key === 'Enter') {
-            e.preventDefault(); // جلوگیری از رفتار پیش‌فرض
-            calculate(); // دقیقاً مثل دکمه "="
-            return;
-        } else if (key === '=') {
+        } else if (key === 'Enter' || key === '=') {
+            e.preventDefault();
             calculate();
-        } else if (key === 'Escape') {
-            clearAll();
-        } else if (key === 'Delete') {
+        } else if (key === 'Escape' || key === 'Delete') {
             clearAll();
         } else if (key === 'Backspace') {
             deleteLastChar();
