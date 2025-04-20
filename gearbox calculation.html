@@ -179,6 +179,25 @@
             margin-bottom: 0;
         }
 
+        .speed-input-container {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .speed-input-container .form-group {
+            display: inline-block;
+            width: 200px;
+            margin-right: 10px;
+        }
+
+        .speed-input-container button {
+            display: inline-block;
+            width: auto;
+            margin: 0;
+            padding: 12px 15px;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -200,6 +219,19 @@
             .tire-inputs {
                 flex-direction: column;
                 gap: 15px;
+            }
+
+            .speed-input-container .form-group {
+                display: block;
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .speed-input-container button {
+                display: block;
+                width: 100%;
+                margin: 10px auto;
             }
         }
     </style>
@@ -292,11 +324,38 @@
                     <tbody></tbody>
                 </table>
             </div>
+
+            <div class="speed-input-container" id="speedInputContainer">
+                <div class="form-group">
+                    <input type="number" id="targetSpeed" placeholder="سرعت مورد نظر (کیلومتر بر ساعت)">
+                </div>
+                <button onclick="calculateRpmForSpeed()">
+                    <i class="fas fa-tachometer-alt"></i> محاسبه RPM
+                </button>
+            </div>
+
+            <div class="result-section" id="rpmForSpeedSection" style="display: none;">
+                <h3>دور موتور در سرعت مورد نظر</h3>
+                <table id="rpmForSpeedTable">
+                    <thead>
+                    <tr>
+                        <th>دنده</th>
+                        <th>RPM</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
+    // Global variables to store calculation results
+    let gearRatios = [];
+    let fd = 0;
+    let tyreCircumference = 0;
+
     // Hide all error messages initially
     document.querySelectorAll('.error').forEach(el => {
         el.style.display = 'none';
@@ -376,7 +435,7 @@
         }
 
         // Validate gear ratios
-        const gearRatios = [];
+        gearRatios = [];
 
         for (let i = 1; i <= gearCount; i++) {
             const gearRatioInput = document.getElementById(`gearRatio${i}`);
@@ -423,13 +482,13 @@
         const finalDriveValue = finalDrive.value;
         const fdFirstTwoDigits = Math.floor(parseInt(finalDriveValue) / 100);
         const fdLastTwoDigits = Math.floor(parseInt(finalDriveValue) % 100);
-        const fd = fdLastTwoDigits / fdFirstTwoDigits;
+        fd = fdLastTwoDigits / fdFirstTwoDigits;
 
         // Calculate tire dimensions
         const rimDiameterMm = parseFloat(rimDiameter) * 25.4;
         const sidewallHeight = (parseFloat(tireWidth) * parseFloat(aspectRatio)) / 100.0;
         const tyreDiameter = (sidewallHeight * 2) + rimDiameterMm;
-        const tyreCircumference = (Math.PI * tyreDiameter) / 1000;
+        tyreCircumference = (Math.PI * tyreDiameter) / 1000;
 
         // Display gear ratios
         const gearRatiosTable = document.querySelector('#gearRatiosTable tbody');
@@ -470,12 +529,42 @@
             rpmChangeTable.appendChild(row);
         }
 
+        // Show speed input container
+        document.getElementById('speedInputContainer').style.display = 'block';
+        document.getElementById('rpmForSpeedSection').style.display = 'none';
+
         // Show results with animation
         const results = document.getElementById('results');
         results.style.display = 'block';
         results.style.animation = 'none';
         void results.offsetWidth; // Trigger reflow
         results.style.animation = 'fadeIn 0.5s ease';
+    }
+
+    function calculateRpmForSpeed() {
+        const targetSpeedInput = document.getElementById('targetSpeed');
+        const targetSpeed = parseFloat(targetSpeedInput.value);
+
+        if (isNaN(targetSpeed) || targetSpeed <= 0) {
+            alert('لطفاً سرعت معتبر وارد کنید');
+            return;
+        }
+
+        const rpmForSpeedTable = document.querySelector('#rpmForSpeedTable tbody');
+        rpmForSpeedTable.innerHTML = '';
+
+        gearRatios.forEach((ratio, index) => {
+            // Formula: RPM = (Speed * 1000 * ratio * fd) / (tyreCircumference * 60)
+            const rpm = (targetSpeed * 1000 * ratio * fd) / (tyreCircumference * 60);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${rpm.toFixed(2)}</td>
+            `;
+            rpmForSpeedTable.appendChild(row);
+        });
+
+        document.getElementById('rpmForSpeedSection').style.display = 'block';
     }
 </script>
 </body>
