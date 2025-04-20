@@ -117,6 +117,25 @@
     </div>
 
     <script>
+        // تابع برای بارگذاری و اضافه کردن هدر
+function loadHeader() {
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.body.insertAdjacentHTML('afterbegin', data);
+            // اضافه کردن margin-top به محتوای اصلی برای جلوگیری از پوشیده شدن توسط هدر
+            const mainContent = document.querySelector('.container');
+            if (mainContent) {
+                mainContent.style.marginTop = '90px';
+            }
+        })
+        .catch(error => {
+            console.error('Error loading header:', error);
+        });
+}
+
+// فراخوانی تابع هنگام بارگذاری صفحه
+window.addEventListener('DOMContentLoaded', loadHeader);
         // لیست فایل ها با نام های فارسی
         const files = [
             { name: "محاسبه تغییرات نسبت تراکم توسط کمپرس و برعکس", file: "CR Pressure Calculator.html" },
