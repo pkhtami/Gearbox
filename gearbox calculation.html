@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ماشین حساب</title>
+    <title>ماشین حساب دنده خودرو</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
@@ -17,351 +17,466 @@
             --success-color: #2ecc71;
         }
 
-        * {
-            box-sizing: border-box;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #c3cfe2 100%);
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
-        }
-
-        body {
-            background: linear-gradient(135deg, var(--light-bg) 0%, #c3cfe2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            color: var(--text-color);
         }
 
-        .calculator {
-            width: 100%;
-            max-width: 400px;
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
             background-color: var(--card-bg);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            transition: all 0.3s ease;
+            padding-bottom: 20px;
         }
 
         header {
             background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
-            border-bottom: 3px solid var(--accent-color);
+            border-bottom: 5px solid var(--accent-color);
         }
 
-        .display {
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .form-container {
             padding: 20px;
-            background-color: var(--secondary-color);
-            color: white;
         }
 
-        .calculation-display {
-            min-height: 30px;
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.7);
-            word-wrap: break-word;
-            text-align: left;
-            direction: ltr;
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
         }
 
-        .result-display {
-            min-height: 50px;
-            font-size: 36px;
-            font-weight: bold;
-            margin-top: 10px;
-            word-wrap: break-word;
-            text-align: left;
-            direction: ltr;
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-color);
         }
 
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            padding: 20px;
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.2);
         }
 
         button {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
             border: none;
-            outline: none;
-            padding: 15px 0;
-            font-size: 20px;
+            padding: 12px 25px;
             border-radius: 8px;
             cursor: pointer;
-            background-color: var(--light-bg);
-            color: var(--text-color);
-            transition: all 0.2s ease;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            font-weight: 600;
+            display: block;
+            margin: 30px auto;
+            width: 200px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         button:hover {
-            background-color: #d6dbdf;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
         button:active {
             transform: translateY(0);
         }
 
-        .operator {
-            background-color: var(--primary-color);
-            color: white;
+        .results {
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            display: none;
+            animation: fadeIn 0.5s ease;
         }
 
-        .operator:hover {
-            background-color: #3a5a9f;
+        .result-section {
+            margin-bottom: 30px;
         }
 
-        .function {
-            background-color: var(--accent-color);
-            color: var(--text-color);
+        .result-section h3 {
+            color: var(--secondary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            text-align: center;
+            font-size: 20px;
         }
 
-        .function:hover {
-            background-color: #e6b800;
+        .error {
+            color: var(--error-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+            align-items: center;
         }
 
-        .equals {
-            background-color: var(--success-color);
-            color: white;
+        .error i {
+            margin-left: 5px;
         }
 
-        .equals:hover {
-            background-color: #24a15a;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
 
-        .clear, .delete {
-            background-color: var(--error-color);
-            color: white;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
         }
 
-        .clear:hover, .delete:hover {
-            background-color: #d62c1a;
+        th {
+            background-color: rgba(75, 108, 183, 0.1);
+            color: var(--secondary-color);
+            font-weight: 600;
         }
 
-        .constant {
-            background-color: #9b59b6;
-            color: white;
+        tr:nth-child(even) {
+            background-color: rgba(75, 108, 183, 0.03);
         }
 
-        .constant:hover {
-            background-color: #8e44ad;
+        .tire-inputs {
+            display: flex;
+            gap: 10px;
         }
 
-        @media (max-width: 400px) {
-            button {
-                padding: 12px 0;
-                font-size: 18px;
+        .tire-inputs .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
             }
 
-            .result-display {
-                font-size: 30px;
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .tire-inputs {
+                flex-direction: column;
+                gap: 15px;
             }
         }
     </style>
 </head>
 <body>
-<div class="calculator">
+<div class="container">
     <header>
-        <h2>ماشین حساب مهندسی</h2>
+        <h1>ماشین حساب دنده خودرو</h1>
+        <div class="subtitle">محاسبات تخصصی سیستم انتقال قدرت</div>
     </header>
-    <div class="display">
-        <div class="calculation-display" id="calculation"></div>
-        <div class="result-display" id="result">0</div>
-    </div>
-    <div class="buttons">
-        <button class="delete" onclick="deleteLastChar()"><i class="fas fa-backspace"></i></button>
-        <button class="clear" onclick="clearAll()">C</button>
-        <button class="operator" onclick="addToCalculation('(')">)</button>
-        <button class="operator" onclick="addToCalculation('/')">/</button>
 
-        <button class="constant" onclick="addConstant('π')">π</button>
-        <button class="constant" onclick="addConstant('e')">e</button>
-        <button class="operator" onclick="addToCalculation(')')">(</button>
-        <button class="operator" onclick="addToCalculation('-')">-</button>
+    <div class="form-container">
+        <div class="form-group">
+            <label for="gearCount">تعداد دنده</label>
+            <input type="number" id="gearCount" min="1" max="10" placeholder="مثال: 5">
+            <div id="gearCountError" class="error"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید (1-10)</div>
+        </div>
 
-        <button onclick="addToCalculation('9')">9</button>
-        <button onclick="addToCalculation('8')">8</button>
-        <button onclick="addToCalculation('7')">7</button>
-        <button class="operator" onclick="addToCalculation('+')">+</button>
+        <div id="gearRatiosContainer"></div>
 
-        <button onclick="addToCalculation('6')">6</button>
-        <button onclick="addToCalculation('5')">5</button>
-        <button onclick="addToCalculation('4')">4</button>
-        <button class="operator" onclick="addToCalculation('×')">×</button>
+        <div class="form-group">
+            <label for="finalDrive">ضریب نهائی (چهار رقمی)</label>
+            <input type="number" id="finalDrive" placeholder="مثال: 1778">
+            <div id="finalDriveError" class="error"><i class="fas fa-exclamation-circle"></i> عدد باید چهار رقمی باشد و دو رقم آخر صفر نباشند</div>
+        </div>
 
-        <button onclick="addToCalculation('3')">3</button>
-        <button onclick="addToCalculation('2')">2</button>
-        <button onclick="addToCalculation('1')">1</button>
-        <button class="operator" onclick="addPercentage()">%</button>
+        <div class="form-group">
+            <label for="rpm">کاتاف (RPM)</label>
+            <input type="number" id="rpm" placeholder="مثال: 7000">
+            <div id="rpmError" class="error"><i class="fas fa-exclamation-circle"></i> لطفاً مقدار معتبر وارد کنید</div>
+        </div>
 
-        <button onclick="addToCalculation('.')">.</button>
-        <button onclick="addToCalculation('0')" style="grid-column: span 2;">0</button>
-        <button class="equals" onclick="calculate()">=</button>
+        <div class="form-group">
+            <label>مشخصات تایر</label>
+            <div class="tire-inputs">
+                <div class="form-group">
+                    <input type="number" id="tireWidth" placeholder="عرض (میلیمتر)">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="aspectRatio" placeholder="نسبت ارتفاع">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="rimDiameter" placeholder="قطر رینگ (اینچ)">
+                </div>
+            </div>
+            <div id="tireError" class="error"><i class="fas fa-exclamation-circle"></i> لطفاً تمام مقادیر تایر را وارد کنید</div>
+        </div>
+
+        <button onclick="calculate()">
+            <i class="fas fa-calculator"></i> محاسبه
+        </button>
+
+        <div class="results" id="results">
+            <div class="result-section">
+                <h3>ضرایب دنده‌ها</h3>
+                <table id="gearRatiosTable">
+                    <thead>
+                    <tr>
+                        <th>دنده</th>
+                        <th>ضریب دنده</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="result-section">
+                <h3>حداکثر سرعت در دنده‌ها</h3>
+                <table id="speedTable">
+                    <thead>
+                    <tr>
+                        <th>دنده</th>
+                        <th>سرعت (کیلومتر بر ساعت)</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <div class="result-section">
+                <h3>تغییر دور موتور هنگام تعویض دنده</h3>
+                <table id="rpmChangeTable">
+                    <thead>
+                    <tr>
+                        <th>از دنده</th>
+                        <th>به دنده</th>
+                        <th>تغییر RPM</th>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
-    let calculation = '';
-    let result = '0';
-    let waitingForOperand = false;
+    // Hide all error messages initially
+    document.querySelectorAll('.error').forEach(el => {
+        el.style.display = 'none';
+    });
 
-    const calculationDisplay = document.getElementById('calculation');
-    const resultDisplay = document.getElementById('result');
+    document.getElementById('gearCount').addEventListener('input', function() {
+        const count = parseInt(this.value);
+        const container = document.getElementById('gearRatiosContainer');
+        container.innerHTML = '';
 
-    function updateDisplay() {
-        calculationDisplay.textContent = calculation;
-        resultDisplay.textContent = result;
+        if (count > 0 && count <= 10) {
+            for (let i = 1; i <= count; i++) {
+                const div = document.createElement('div');
+                div.className = 'form-group';
+                div.innerHTML = `
+                    <label for="gearRatio${i}">ضریب دنده ${i} (چهار رقمی)</label>
+                    <input type="number" id="gearRatio${i}">
+                    <div id="gearRatio${i}Error" class="error"><i class="fas fa-exclamation-circle"></i> عدد باید چهار رقمی باشد و دو رقم آخر صفر نباشند</div>
+                `;
+                container.appendChild(div);
+            }
+        }
+    });
+
+    function validateFourDigitNumber(input, errorElement) {
+        const value = input.value;
+        if (value.length !== 4 || isNaN(value)) {
+            errorElement.style.display = 'flex';
+            input.style.borderColor = 'var(--error-color)';
+            return false;
+        }
+
+        const lastTwoDigits = parseInt(value) % 100;
+        if (lastTwoDigits === 0) {
+            errorElement.style.display = 'flex';
+            input.style.borderColor = 'var(--error-color)';
+            return false;
+        }
+
+        errorElement.style.display = 'none';
+        input.style.borderColor = '#ddd';
+        return true;
     }
 
-    function addToCalculation(value) {
-        if (waitingForOperand && isNumber(value)) {
-            calculation += value;
-            result = value;
-            waitingForOperand = false;
-        } else if (waitingForOperand) {
-            calculation += ' ' + value + ' ';
+    function validateInput(inputId, errorId, condition) {
+        const input = document.getElementById(inputId);
+        const errorElement = document.getElementById(errorId);
+        const value = input.value;
+
+        if (value === '' || isNaN(value) || condition(parseFloat(value))) {
+            errorElement.style.display = 'flex';
+            input.style.borderColor = 'var(--error-color)';
+            return false;
         } else {
-            if (result === '0' && value !== '.') {
-                result = value;
-                calculation = value;
-            } else {
-                result += value;
-                calculation += value;
-            }
-        }
-
-        updateDisplay();
-    }
-
-    function isNumber(value) {
-        return !isNaN(value) && value !== ' ' && value !== '';
-    }
-
-    function addConstant(constant) {
-        if (constant === 'π') {
-            if (waitingForOperand) {
-                calculation += Math.PI.toString();
-                result = Math.PI.toString();
-                waitingForOperand = false;
-            } else {
-                calculation += Math.PI.toString();
-                result = Math.PI.toString();
-            }
-        } else if (constant === 'e') {
-            if (waitingForOperand) {
-                calculation += Math.E.toString();
-                result = Math.E.toString();
-                waitingForOperand = false;
-            } else {
-                calculation += Math.E.toString();
-                result = Math.E.toString();
-            }
-        }
-        updateDisplay();
-    }
-
-    function clearAll() {
-        calculation = '';
-        result = '0';
-        waitingForOperand = false;
-        updateDisplay();
-    }
-
-    function deleteLastChar() {
-        if (result.length > 1) {
-            result = result.slice(0, -1);
-            calculation = calculation.slice(0, -1);
-        } else {
-            result = '0';
-            calculation = calculation.slice(0, -1);
-        }
-        updateDisplay();
-    }
-
-    function addPercentage() {
-        try {
-            const parts = calculation.split(/([\+\-\×\/])/).filter(part => part.trim() !== '');
-
-            if (parts.length === 1) {
-                const num = parseFloat(parts[0]) || 0;
-                result = (num / 100).toString();
-                calculation = result;
-            }
-            else if (parts.length >= 3) {
-                const lastNumber = parseFloat(parts[parts.length - 1]) || 0;
-                const prevNumber = parseFloat(parts[parts.length - 3]) || 0;
-
-                const percentageValue = (prevNumber * lastNumber / 100);
-                parts[parts.length - 1] = percentageValue.toString();
-                calculation = parts.join(' ');
-                result = percentageValue.toString();
-            }
-
-            waitingForOperand = false;
-            updateDisplay();
-        } catch (error) {
-            result = 'Error';
-            updateDisplay();
+            errorElement.style.display = 'none';
+            input.style.borderColor = '#ddd';
+            return true;
         }
     }
 
     function calculate() {
-        try {
-            let expr = calculation
-                .replace(/×/g, '*')
-                .replace(/π/g, Math.PI.toString())
-                .replace(/e/g, Math.E.toString());
+        let isValid = true;
 
-            result = eval(expr).toString();
-            calculation = '';
-            waitingForOperand = false;
-            updateDisplay();
-        } catch (error) {
-            result = 'Error';
-            updateDisplay();
+        // Validate gear count
+        if (!validateInput('gearCount', 'gearCountError',
+            (v) => v <= 0 || v > 10)) {
+            isValid = false;
         }
+
+        const gearCount = parseInt(document.getElementById('gearCount').value);
+
+        // Validate final drive
+        const finalDrive = document.getElementById('finalDrive');
+        const finalDriveError = document.getElementById('finalDriveError');
+        if (finalDrive.value === '' || !validateFourDigitNumber(finalDrive, finalDriveError)) {
+            isValid = false;
+        }
+
+        // Validate gear ratios
+        const gearRatios = [];
+
+        for (let i = 1; i <= gearCount; i++) {
+            const gearRatioInput = document.getElementById(`gearRatio${i}`);
+            const gearRatioError = document.getElementById(`gearRatio${i}Error`);
+
+            if (gearRatioInput) {
+                if (gearRatioInput.value === '' || !validateFourDigitNumber(gearRatioInput, gearRatioError)) {
+                    isValid = false;
+                } else {
+                    const value = gearRatioInput.value;
+                    const firstTwoDigits = Math.floor(parseInt(value) / 100);
+                    const lastTwoDigits = Math.floor(parseInt(value) % 100);
+                    gearRatios.push(lastTwoDigits / firstTwoDigits);
+                }
+            }
+        }
+
+        // Validate RPM
+        if (!validateInput('rpm', 'rpmError',
+            (v) => v <= 0)) {
+            isValid = false;
+        }
+
+        const rpm = parseFloat(document.getElementById('rpm').value);
+
+        // Validate tire dimensions
+        const tireWidth = document.getElementById('tireWidth').value;
+        const aspectRatio = document.getElementById('aspectRatio').value;
+        const rimDiameter = document.getElementById('rimDiameter').value;
+
+        const tireError = document.getElementById('tireError');
+        if (tireWidth === '' || aspectRatio === '' || rimDiameter === '') {
+            tireError.style.display = 'flex';
+            isValid = false;
+        } else {
+            tireError.style.display = 'none';
+        }
+
+        if (!isValid) {
+            return;
+        }
+
+        // Calculate final drive ratio
+        const finalDriveValue = finalDrive.value;
+        const fdFirstTwoDigits = Math.floor(parseInt(finalDriveValue) / 100);
+        const fdLastTwoDigits = Math.floor(parseInt(finalDriveValue) % 100);
+        const fd = fdLastTwoDigits / fdFirstTwoDigits;
+
+        // Calculate tire dimensions
+        const rimDiameterMm = parseFloat(rimDiameter) * 25.4;
+        const sidewallHeight = (parseFloat(tireWidth) * parseFloat(aspectRatio)) / 100.0;
+        const tyreDiameter = (sidewallHeight * 2) + rimDiameterMm;
+        const tyreCircumference = (Math.PI * tyreDiameter) / 1000;
+
+        // Display gear ratios
+        const gearRatiosTable = document.querySelector('#gearRatiosTable tbody');
+        gearRatiosTable.innerHTML = '';
+        gearRatios.forEach((ratio, index) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${ratio.toFixed(4)}</td>
+            `;
+            gearRatiosTable.appendChild(row);
+        });
+
+        // Calculate and display max speeds
+        const speedTable = document.querySelector('#speedTable tbody');
+        speedTable.innerHTML = '';
+        gearRatios.forEach((ratio, index) => {
+            const speed = (((rpm / ratio / fd) * tyreCircumference) / 1000) * 60;
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${speed.toFixed(2)}</td>
+            `;
+            speedTable.appendChild(row);
+        });
+
+        // Calculate and display RPM changes
+        const rpmChangeTable = document.querySelector('#rpmChangeTable tbody');
+        rpmChangeTable.innerHTML = '';
+        for (let i = 0; i < gearRatios.length - 1; i++) {
+            const nextRPM = (rpm * gearRatios[i + 1]) / gearRatios[i];
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${i + 1}</td>
+                <td>${i + 2}</td>
+                <td>${nextRPM.toFixed(2)}</td>
+            `;
+            rpmChangeTable.appendChild(row);
+        }
+
+        // Show results with animation
+        const results = document.getElementById('results');
+        results.style.display = 'block';
+        results.style.animation = 'none';
+        void results.offsetWidth; // Trigger reflow
+        results.style.animation = 'fadeIn 0.5s ease';
     }
-
-    document.addEventListener('keydown', (e) => {
-        const key = e.key;
-
-        if (key >= '0' && key <= '9') {
-            addToCalculation(key);
-        } else if (key === '.') {
-            addToCalculation('.');
-        } else if (key === '+') {
-            addToCalculation('+');
-        } else if (key === '-') {
-            addToCalculation('-');
-        } else if (key === '*') {
-            addToCalculation('×');
-        } else if (key === '/') {
-            addToCalculation('/');
-        } else if (key === '%') {
-            addPercentage();
-        } else if (key === ')') {
-            addToCalculation('(');
-        } else if (key === '(') {
-            addToCalculation(')');
-        } else if (key === 'Enter' || key === '=') {
-            e.preventDefault();
-            calculate();
-        } else if (key === 'Escape' || key === 'Delete') {
-            clearAll();
-        } else if (key === 'Backspace') {
-            deleteLastChar();
-        } else if (key === 'p' && e.shiftKey) {
-            addConstant('π');
-        } else if (key === 'e' && !e.shiftKey) {
-            addConstant('e');
-        }
-    });
 </script>
 </body>
 </html>
