@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نرخ‌نامه خدمات | ریمپ سهند</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #4b6cb7;
+            --dark-blue: #182848;
+            --accent-yellow: #ffc107;
+            --light-gray: #f5f7fa;
+            --medium-gray: #c3cfe2;
+            --text-dark: #343a40;
+            --text-light: #f8f9fa;
+            --border-gray: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--medium-gray) 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* هدر و ناوبری - نسخه جدید ریسپانسیو */
+        header {
+            background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 5px solid var(--accent-yellow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-left: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--accent-yellow);
+        }
+
+        /* منوی اصلی برای دسکتاپ */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            transition: all 0.4s ease-in-out;
+        }
+
+        .nav-links li {
+            margin-right: 1.8rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-yellow);
+        }
+
+        .nav-links a i {
+            margin-left: 8px;
+            font-size: 0.9rem;
+        }
+
+        .active {
+            color: var(--accent-yellow) !important;
+        }
+
+        .active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-yellow);
+        }
+
+        /* دکمه منوی همبرگر برای موبایل */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 25px;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+
+        /* استایل‌های ریسپانسیو */
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: linear-gradient(to bottom, var(--primary-blue), var(--dark-blue));
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 80px 30px 30px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+                width: 100%;
+            }
+
+            .nav-links a {
+                padding: 0.8rem;
+                width: 100%;
+                border-radius: 5px;
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .active::after {
+                display: none;
+            }
+
+            .active {
+                background-color: rgba(255, 193, 7, 0.2) !important;
+            }
+        }
+
+        /* انیمیشن برای آیتم‌های منو */
+        @media (max-width: 992px) {
+            .nav-links li {
+                opacity: 0;
+                transform: translateX(20px);
+                transition: all 0.4s ease;
+            }
+
+            .nav-links.active li {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .nav-links.active li:nth-child(1) { transition-delay: 0.1s; }
+            .nav-links.active li:nth-child(2) { transition-delay: 0.2s; }
+            .nav-links.active li:nth-child(3) { transition-delay: 0.3s; }
+            .nav-links.active li:nth-child(4) { transition-delay: 0.4s; }
+            .nav-links.active li:nth-child(5) { transition-delay: 0.5s; }
+        }
+
+        /* محتوای اصلی */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding-bottom: 2rem;
+        }
+
+        .pricing-header {
+            padding: 3rem 2rem;
+            text-align: center;
+            background: linear-gradient(rgba(75, 108, 183, 0.9), rgba(24, 40, 72, 0.9)),
+            url('https://images.unsplash.com/photo-1494972308805-463bc619d34e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        .pricing-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* بخش جداول قیمت */
+        .pricing-section {
+            padding: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--medium-gray);
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--dark-blue);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-yellow);
+        }
+
+        /* استایل جداول */
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .pricing-table th {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 1rem;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        .pricing-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-gray);
+            text-align: right;
+        }
+
+        .pricing-table tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pricing-table tr:hover {
+            background-color: rgba(75, 108, 183, 0.1);
+        }
+
+        .price {
+            font-weight: 700;
+            color: var(--dark-blue);
+        }
+
+        .price::after {
+            content: ' تومان';
+            font-weight: normal;
+            font-size: 0.9em;
+        }
+
+        .note {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: rgba(255, 193, 7, 0.1);
+            border-right: 4px solid var(--accent-yellow);
+            border-radius: 4px;
+        }
+
+        .note p {
+            margin-bottom: 0.5rem;
+        }
+
+        .note i {
+            color: var(--accent-yellow);
+            margin-left: 5px;
+        }
+
+        /* فوتر */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-gray);
+            background-color: white;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--primary-blue);
+            margin: 0 1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--dark-blue);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: var(--light-gray);
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-blue);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* رسپانسیو */
+        @media (max-width: 768px) {
+            .pricing-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .pricing-header p {
+                font-size: 1rem;
+            }
+
+            .container {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .pricing-table th, 
+            .pricing-table td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pricing-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- هدر و ناوبری -->
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo2.png" alt="لوگوی ریمپ سهند">
+            <h1>ریمپ <span>سهند</span></h1>
+        </div>
+
+        <!-- منوی همبرگر -->
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="main.html"><i class="fas fa-home"></i> صفحه اصلی</a></li>
+            <li><a href="services.html"><i class="fas fa-cogs"></i> خدمات ما</a></li>
+            <li><a href="pricing.html" class="active"><i class="fas fa-tags"></i> نرخ‌نامه</a></li>
+            <li><a href="index.html"><i class="fas fa-calculator"></i> ماشین حساب</a></li>
+            <li><a href="contact.html"><i class="fas fa-phone-alt"></i> تماس با ما</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- محتوای اصلی -->
+<div class="container">
+    <section class="pricing-header">
+        <h1>نرخ‌نامه خدمات ریمپ سهند</h1>
+        <p>قیمت‌های به‌روز و رقابتی خدمات ریمپ ایسیو و تیونینگ خودرو</p>
+    </section>
+
+    <section class="pricing-section">
+        <div class="section-title">
+            <h2>قیمت ریمپ ایسیو بر اساس خانواده خودرو</h2>
+        </div>
+
+        <table class="pricing-table">
+            <thead>
+                <tr>
+                    <th>خانواده خودرو</th>
+                    <th>مدل‌ها</th>
+                    <th>قیمت (تومان)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>M13</td>
+                    <td>پراید ۱۱۱، ۱۳۱، ۱۳۲، ۱۴۱، ۱۵۱</td>
+                    <td class="price">۱,۴۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>M15</td>
+                    <td>تیبا، ساینا، کوییک، اطلس، سهند</td>
+                    <td class="price">۱,۸۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>M15T</td>
+                    <td>شاهین</td>
+                    <td class="price">۲,۲۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>XU7</td>
+                    <td>پرشیا، آریسان، ۴۰۵، سورن، سمند</td>
+                    <td class="price">۲,۰۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>TU3</td>
+                    <td>پژو ۲۰۶، ۲۰۷</td>
+                    <td class="price">۲,۰۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>TU5</td>
+                    <td>پرشیا، شاهین، سمند، رانا، تارا، ۲۰۶، ۲۰۷، ۴۰۵</td>
+                    <td class="price">۲,۲۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>EF7</td>
+                    <td>سمند، سورن، دنا</td>
+                    <td class="price">۲,۵۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>EF7T</td>
+                    <td>ری‌را، دنا توربو، سورن توربو</td>
+                    <td class="price">۲,۸۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>K4M</td>
+                    <td>تندر ۹۰</td>
+                    <td class="price">۲,۵۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>چینی تنفس طبیعی</td>
+                    <td>خودروهای چینی با موتور تنفس طبیعی</td>
+                    <td class="price">۲,۵۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>چینی توربو</td>
+                    <td>خودروهای چینی با موتور توربوشارژ</td>
+                    <td class="price">۲,۸۰۰,۰۰۰</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="pricing-section">
+        <div class="section-title">
+            <h2>قیمت سایر خدمات</h2>
+        </div>
+
+        <table class="pricing-table">
+            <thead>
+                <tr>
+                    <th>خدمات</th>
+                    <th>مدلها</th>
+                    <th>قیمت (تومان)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>حذف تأخیر پدال گاز</td>
+                    <td>تمام مدل‌ها</td>
+                    <td class="price">۴۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>کاتاف رگباری</td>
+                    <td>تمام مدل‌ها</td>
+                    <td class="price">۲۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>آپدیت و بازنشانی</td>
+                    <td>تمام مدل‌ها</td>
+                    <td class="price">۲۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>حذف خطای کاذب</td>
+                    <td>تمام مدل‌ها</td>
+                    <td class="price">۲۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>دیاگ، عیب‌یابی و حذف خطا</td>
+                    <td>تمام مدل‌ها</td>
+                    <td class="price">۲۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>اصلاح ایرادات نرم‌افزاری</td>
+                    <td>تمام مدل‌ها</td>
+                    <td class="price">۲۰۰,۰۰۰</td>
+                </tr>
+                <tr>
+                    <td>اصلاح دمای آب</td>
+                    <td>تمام مدل‌ها</td>
+                    <td class="price">۲۰۰,۰۰۰</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="note">
+            <p><i class="fas fa-info-circle"></i> توجه: قیمت‌های فوق ممکن است بسته به شرایط خودرو و نوع خدمات اضافی تغییر کند.</p>
+            <p><i class="fas fa-phone"></i> برای اطلاعات دقیق‌تر و مشاوره رایگان با ما تماس بگیرید: <a href="tel:+989308139944">۰۹۳۰۸۱۳۹۹۴۴</a></p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="services.html">خدمات ما</a>
+            <a href="pricing.html">نرخ‌نامه</a>
+            <a href="calculator.html">ماشین حساب</a>
+            <a href="contact.html">تماس با ما</a>
+        </div>
+
+        <div class="social-links">
+            <a href="https://www.instagram.com/remapsahand/"><i class="fab fa-instagram"></i></a>
+            <a href="https://t.me/pkhtami"><i class="fab fa-telegram"></i></a>
+            <a href="https://api.whatsapp.com/send/?phone=989308139944&text&app_absent=0"><i class="fab fa-whatsapp"></i></a>
+            <a href="tel:+989308139944"><i class="fa-solid fa-phone"></i></a>
+            <a href="https://www.google.com/maps?q=37.9286925311032,46.12345242158474"><i class="fa-solid fa-location-dot"></i></a>
+        </div>
+
+        <p>طراحی شده توسط تیم فنی سهند © ۱۴۰۲</p>
+    </footer>
+</div>
+
+<script>
+    // اسکریپت برای منوی همبرگر
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+
+        // جلوگیری از اسکرول صفحه زمانی که منو باز است
+        if (navLinks.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // بستن منو هنگام کلیک روی لینک‌ها
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+</script>
+</body>
+</html>
