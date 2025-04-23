@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوالات متداول | ریمپ سهند</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #4b6cb7;
+            --dark-blue: #182848;
+            --accent-yellow: #ffc107;
+            --light-gray: #f5f7fa;
+            --medium-gray: #c3cfe2;
+            --text-dark: #343a40;
+            --text-light: #f8f9fa;
+            --border-gray: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--medium-gray) 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* هدر و ناوبری */
+        header {
+            background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 5px solid var(--accent-yellow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-left: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--accent-yellow);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            transition: all 0.4s ease-in-out;
+        }
+
+        .nav-links li {
+            margin-right: 1.8rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-yellow);
+        }
+
+        .nav-links a i {
+            margin-left: 8px;
+            font-size: 0.9rem;
+        }
+
+        .active {
+            color: var(--accent-yellow) !important;
+        }
+
+        .active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-yellow);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 25px;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: linear-gradient(to bottom, var(--primary-blue), var(--dark-blue));
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 80px 30px 30px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+                width: 100%;
+            }
+
+            .nav-links a {
+                padding: 0.8rem;
+                width: 100%;
+                border-radius: 5px;
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .active::after {
+                display: none;
+            }
+
+            .active {
+                background-color: rgba(255, 193, 7, 0.2) !important;
+            }
+        }
+
+        /* استایل صفحه FAQ */
+        .faq-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 2rem 0;
+        }
+
+        .faq-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .faq-header h1 {
+            font-size: 2.5rem;
+            color: var(--dark-blue);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .faq-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-yellow);
+        }
+
+        .faq-header p {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* آیتم‌های سوالات */
+        .faq-item {
+            display: flex;
+            margin-bottom: 4rem;
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .faq-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .faq-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .faq-image {
+            flex: 1;
+            min-height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .faq-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .faq-item:hover .faq-image img {
+            transform: scale(1.05);
+        }
+
+        .faq-content {
+            flex: 1;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .faq-question {
+            font-size: 1.6rem;
+            color: var(--dark-blue);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .faq-question::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-yellow);
+        }
+
+        .faq-answer {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-icon {
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            margin-left: 1rem;
+        }
+
+        /* انیمیشن‌ها */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* رسپانسیو */
+        @media (max-width: 992px) {
+            .faq-item, .faq-item:nth-child(odd) {
+                flex-direction: column;
+            }
+
+            .faq-image {
+                min-height: 250px;
+            }
+
+            .faq-content {
+                padding: 2rem;
+            }
+
+            .faq-question {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .faq-header h1 {
+                font-size: 2rem;
+            }
+
+            .faq-header p {
+                font-size: 1rem;
+            }
+
+            .faq-question {
+                font-size: 1.3rem;
+            }
+
+            .faq-answer {
+                font-size: 1rem;
+            }
+        }
+
+        /* فوتر */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-gray);
+            background-color: white;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--primary-blue);
+            margin: 0 1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--dark-blue);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: var(--light-gray);
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-blue);
+            color: white;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+<!-- هدر و ناوبری -->
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo2.png" alt="لوگوی ریمپ سهند">
+            <h1>ریمپ <span>سهند</span></h1>
+        </div>
+
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="main.html"><i class="fas fa-home"></i> صفحه اصلی</a></li>
+            <li><a href="services.html"><i class="fas fa-cogs"></i> خدمات ما</a></li>
+            <li><a href="pricing.html"><i class="fas fa-tags"></i> نرخ‌نامه</a></li>
+            <li><a href="index.html"><i class="fas fa-calculator"></i> ماشین حساب</a></li>
+            <li><a href="faq.html" class="active"><i class="fas fa-question-circle"></i> سوالات متداول</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- محتوای اصلی FAQ -->
+<div class="faq-container">
+    <div class="faq-header">
+        <h1>سوالات متداول</h1>
+        <p>پاسخ به رایج‌ترین سوالات شما در مورد ریمپ و تیونینگ خودرو</p>
+    </div>
+
+    <!-- آیتم‌های سوالات -->
+    <div class="faq-item">
+        <div class="faq-image">
+            <img src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80" alt="ریمپ ایسیو">
+        </div>
+        <div class="faq-content">
+            <h2 class="faq-question"><i class="fas fa-question-circle faq-icon"></i> ریمپ چیه؟</h2>
+            <p class="faq-answer">
+                ریمپ یعنی اینکه تنظیمات پیش‌فرضی ایسیو رو بازنگری و اصلاح کنیم. در این فرآیند،موتور بر اساس شرایط فعلی خودرو مثل کیفیت سوخت ، شرایط محیطی و نیازهای خاص صاحب خودرو تنظیم میشه همچنین بعضی از خودروها به‌خاطر محدودیت‌های آلایندگی، تنظیماتشون طوریه که باعث کاهش شتاب، افزایش مصرف سوخت و حتی گاهی آسیب به موتور میشه. با ریمپ کردن، این محدودیت‌ها رو میشه کمتر کرد یا حتی حذف کرد و ماشین رو با سوخت‌های موجود و شرایط کشور هماهنگ کرد.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-image">
+            <img src="https://images.unsplash.com/photo-1557529141-14e6b01a2787?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80" alt="آسیب ریمپ">
+        </div>
+        <div class="faq-content">
+            <h2 class="faq-question"><i class="fas fa-exclamation-triangle faq-icon"></i> آیا ریمپ به ایسیو یا موتور آسیب می‌زنه؟</h2>
+            <p class="faq-answer">
+                نه، ریمپ هیچ آسیبی به ایسیو و موتور خودرو وارد نمی‌کنه. در واقع با ریمپ، مشکلات نرم‌افزاری و عملکردی موتور برطرف میشه و بهینه‌سازی‌های لازم بر اساس شرایط جوی و کیفیت سوخت ایران انجام میشه. با تنظیم کردن موتور، مصرف سوخت کمتر میشه، توان موتور بیشتر میشه و بار و فشار روی موتور کمتر میشه که در نهایت به افزایش طول عمر موتور کمک می‌کنه.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-image">
+            <img src="https://images.unsplash.com/photo-1583121274602-3e2820c69888?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80" alt="کارخانه">
+        </div>
+        <div class="faq-content">
+            <h2 class="faq-question"><i class="fas fa-industry faq-icon"></i> چرا کارخونه خودش ریمپ نمی‌کنه؟</h2>
+            <p class="faq-answer">
+                نرم‌افزار ایسیو برای هر موتور منحصر به فرده و دو موتوری که از خط تولید میان بیرون دقیقاً مشابه هم نیستن. اما شرکت‌های خودروسازی به‌خاطر محدودیت‌های مالی، زمانی و نیروی کار نمی‌تونن برای هر موتور تنظیمات دقیق رو اعمال کنن.به‌جای اون، یه برنامه کلی می‌ریزن که فقط مطمئن بشن موتور درست کار می‌کنه همچنین کمپانی های خودروساز ایرانی مجبوره تولید های خودش رو بخاطر پاس کردن استاندارد های آلایندگی یورو 5 با بنزین های اکتان بالا سازگار کنه تا بتونه استاندارد آلایندگی رو پاس کنه این در حالیست که موتور ها طراحی قدیمی دارن و برای تطبیق با شرایط یورو 5 تحت فشار قرار میگیرند و سوخت‌های جایگاه در بهترین حالت اکتان ۸۱ دارن. به همین دلایل، مپی که کارخونه روی خودروهای ما می‌ریزه، بهینه نیست و ریمپ کردن موجب بهینه سازی و در نتیجه افزایش توان ، کاهش مصرف سوخت و افزایش طول عمر موتور میشه.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-image">
+            <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80" alt="گارانتی">
+        </div>
+        <div class="faq-content">
+            <h2 class="faq-question"><i class="fas fa-shield-alt faq-icon"></i> آیا ریمپ گارانتی رو باطل می‌کنه؟</h2>
+            <p class="faq-answer">
+                در ۹۹ درصد از خودروها، برای ریمپ کردن نیازی به باز کردن درب ایسیو نیست و از طریق پورت دیاگ انجام میشه و هیچ نمایندگی‌ای نمیتونه تغییرات اعمال شده رو متوجه بشه، مگه اینکه خود شما اعلام کنید. بنابراین، گارانتی باطل نمیشه.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-image">
+            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80" alt="ضرورت ریمپ">
+        </div>
+        <div class="faq-content">
+            <h2 class="faq-question"><i class="fas fa-car faq-icon"></i> ریمپ برای چه کسانی واجب هست؟</h2>
+            <p class="faq-answer">
+                کسانی که ماشین با استاندارد یورو 5 (همه ماشین های مدل 98 به بالا) دارند: برنامه ایسیو این ماشین ها برای کار با بنزین با اکتان 95 و استاندارد یورو 5 تنظیم شده هست این درحالیست بنزین های موجود در جایگاه ها بنزین یورو 2 با اکتان زیر 80 می باشد و همچنین پایه موتور اکثر موتور های ماشین های داخلی یورو 2 و 4 هست و بزور برای پاس کردن استاندارد های آلایندگی محدود شده اند و دچار مشکلات فراوانی مانند کم بودن شتاب ، تاخیر پدال و ناک هستنئ که همگی با ریمپ قابل حل هست.<br><br>
+                کسانی که ماشین با موتور توربو دارند:ماشین های توربو به کیفیت بنزین خیلی جساس هستند و برنامه ایسیو آنها برای کار با بنزین با اکتان 95 و استاندارد یورو 5 طراحی شده هست ولی بنزین های موجود در جایگاه ها بنزین یورو 2 با اکتان زیر 80 می باشد و اگر از مکمل های اکتان گران قیمت استفاده نشود موتور دچار ناک میشود و در صورت بی تفاوتی شما پس از مدت کوتاهی موتور شما رو به نابودی خواهد رفت که این موارد با ریمپ و کالیبر کردن ایسیو با بنزین های جایگاه قابل حل هست<br><br>
+                کسانی که علاقه مند ریس و تیونینگ هستند: با ریمپ شتاب خودرو خود را به حداکثر برسانید در سلامت موتور خود را تضمین کنید همچنین هر تغییری در سخت افزار موتور، مثل تغییر اگزوز، حذف کاتالیزور، نصب هدرز، تغییر میل سوپاپ ، تغییر منیفولد و یا تغییراتی در نسبت تراکم نیاز به ریمپ داره تا بهترین کارایی رو بده.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-image">
+            <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80" alt="مشکلات ریمپ">
+        </div>
+        <div class="faq-content">
+            <h2 class="faq-question"><i class="fas fa-tools faq-icon"></i> با ریمپ چه مشکلاتی حل میشه؟</h2>
+            <p class="faq-answer">
+                سخت روشن شدن خودرو (کلد استارت)، دیر پایین اومدن دور موتور، نوسان دور آرام، محدودیت سرعت، عملکرد نامناسب گیربکس اتوماتیک، شتاب کم، تأخیر در پاسخ‌دهی پدال گاز، کاهش توان موتور ، ناک ؛مصرف سوخت بالا و دمای بالای موتور
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-image">
+            <img src="https://images.unsplash.com/photo-1555212697-194d092e3b8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80" alt="رضایت">
+        </div>
+        <div class="faq-content">
+            <h2 class="faq-question"><i class="fas fa-smile faq-icon"></i> اگه از ریمپ راضی نبودم، چی کار کنم؟</h2>
+            <p class="faq-answer">
+                ما برنامه فابریک ماشینتون رو به نام خودتون ذخیره می‌کنیم. اگه به هر دلیلی از ریمپ راضی نبودید، بدون هیچ هزینه‌ای مپ ماشین رو به حالت اولیه برمی‌گردونیم. حتی اگه همون روزی که ریمپ کردید، تغییری حس نکردید یا نپسندیدید، ما هیچ پولی بابت ریمپ نمی‌گیریم و ماشین رو به حالت اولش برمی‌گردونیم.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-image">
+            <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80" alt="ناک">
+        </div>
+        <div class="faq-content">
+            <h2 class="faq-question"><i class="fas fa-fire faq-icon"></i> صدای ناک چیه و چرا برای موتور خطرناکه؟</h2>
+            <p class="faq-answer">
+                ناک ، به‌خاطر احتراق ناخواسته در موتور اتفاق میفته.وقتی مخلوط سوخت و هوا در مرحله فشرده‌سازی هستند، باید در زمان مناسب جرقه زده بشه تا احتراق درست اتفاق بیفته. اما به‌خاطر ناسازگاری سوخت‌های داخلی با مپ فابریک، این احتراق زودتر رخ میده که باعث کاهش قدرت موتور و در موارد شدیدتر باعث ذوب یا شکستن پیستون میشه.<br><br>
+                1. جرقه‌زنی عادی:<br>
+                جرقه در زمان بهینه زده می‌شود و احتراق به‌صورت کنترل‌شده رخ می‌دهد، باعث حداکثر بازده و عملکرد موتور می‌شود.<br><br>
+                2. ناک:<br>
+                احتراق غیرطبیعی و خودبه‌خودی مخلوط سوخت و هوا بعد از جرقه‌زنی، که امواج شوک تولید کرده و می‌تواند به موتور آسیب بزند.<br><br>
+                3. احتراق زودرس:<br>
+                احتراق مخلوط سوخت و هوا قبل از جرقه‌زنی به دلیل دمای بالا یا نقاط داغ در سیلندر، که می‌تواند منجر به آسیب جدی شود.
+            </p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-image">
+            <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80" alt="ایسیو">
+        </div>
+        <div class="faq-content">
+            <h2 class="faq-question"><i class="fas fa-microchip faq-icon"></i> ایسیو چیه و چیکار میکنه؟</h2>
+            <p class="faq-answer">
+                ایسیو یا همون واحد کنترل الکترونیکی موتور (ECU)، یه سیستم پیشرفته‌ست که مسئولیت مدیریت کارکرد موتور ماشین رو به عهده داره. این سیستم با استفاده از الگوریتم‌های مختلف، پارامترهای موتور رو تنظیم می‌کنه. این تنظیمات بر اساس اطلاعاتی که از سنسورهای مختلف ماشین دریافت می‌کنه، انجام میشه.<< سنسورهایی مثل سنسور اکسیژن، موقعیت دریچه گاز، میل سوپاپ، میل لنگ، سنسور فشار مطلق منیفولد (MAP)، سنسور ناک (Knock)، سنسور دمای آب، سنسور دمای هوا و سنسور دمای اگزوز>>. این سنسورها اطلاعات رو به ایسیو میدن و ایسیو هم با استفاده از این اطلاعات مواردی مثل << زمان پاشش انژکتور، زمان جرقه‌زنی شمع‌ها، کنترل بوست توربو شارژر، زمان‌بندی میل سوپاپ، موقعیت دریچه گاز، کارکرد استپر موتور و کلی پارامتر دیگه>> رو به بهترین شکل تنظیم می‌کنه.
+            </p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="services.html">خدمات ما</a>
+        <a href="pricing.html">نرخ‌نامه</a>
+        <a href="calculator.html">ماشین حساب</a>
+        <a href="contact.html">تماس با ما</a>
+    </div>
+
+    <div class="social-links">
+        <a href="https://www.instagram.com/remapsahand/"><i class="fab fa-instagram"></i></a>
+        <a href="https://t.me/pkhtami"><i class="fab fa-telegram"></i></a>
+        <a href="https://api.whatsapp.com/send/?phone=989308139944&text&app_absent=0"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+989308139944"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://www.google.com/maps?q=37.9286925311032,46.12345242158474"><i class="fa-solid fa-location-dot"></i></a>
+    </div>
+
+    <p>طراحی شده توسط تیم فنی سهند © ۱۴۰۲</p>
+</footer>
+
+<script>
+    // اسکریپت برای منوی همبرگر
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+
+        if (navLinks.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    // انیمیشن اسکرول برای آیتم‌های FAQ
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    function checkScroll() {
+        faqItems.forEach(item => {
+            const itemTop = item.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+            
+            if (itemTop < windowHeight - 100) {
+                item.classList.add('visible', 'fade-in-up');
+            }
+        });
+    }
+
+    // اجرای اولیه برای آیتم‌هایی که در viewport هستند
+    checkScroll();
+
+    // اضافه کردن event listener برای اسکرول
+    window.addEventListener('scroll', checkScroll);
+</script>
+</body>
+</html>
