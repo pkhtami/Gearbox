@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نرخ‌نامه خدمات | ریمپ سهند</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="icon.png" type="image/png">
     <style>
         :root {
             --primary-blue: #4b6cb7;
@@ -416,7 +417,7 @@
                 margin: 20px auto;
             }
 
-            .pricing-table th, 
+            .pricing-table th,
             .pricing-table td {
                 padding: 0.75rem 0.5rem;
                 font-size: 0.9rem;
@@ -426,8 +427,49 @@
         @media (max-width: 480px) {
             .pricing-table {
                 display: block;
-                overflow-x: auto;
-                white-space: nowrap;
+                width: 100%;
+                overflow-x: visible;
+                white-space: normal;
+            }
+
+            .pricing-table thead,
+            .pricing-table tbody,
+            .pricing-table tr,
+            .pricing-table th,
+            .pricing-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .pricing-table tr {
+                margin-bottom: 1rem;
+                border: 1px solid var(--border-gray);
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .pricing-table th {
+                background-color: var(--primary-blue);
+                color: white;
+                text-align: center;
+            }
+
+            .pricing-table td {
+                text-align: right;
+                padding: 0.5rem 1rem;
+                border-bottom: 1px solid var(--border-gray);
+            }
+
+            .pricing-table td:before {
+                content: attr(data-label);
+                font-weight: bold;
+                display: inline-block;
+                width: 50%;
+                text-align: left;
+            }
+
+            .pricing-table tr:nth-child(even) {
+                background-color: var(--light-gray);
             }
         }
     </style>
@@ -472,68 +514,68 @@
 
         <table class="pricing-table">
             <thead>
-                <tr>
-                    <th>خانواده خودرو</th>
-                    <th>مدل‌ها</th>
-                    <th>قیمت (تومان)</th>
-                </tr>
+            <tr>
+                <th>خانواده خودرو</th>
+                <th>مدل‌ها</th>
+                <th>قیمت (تومان)</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>M13</td>
-                    <td>پراید ۱۱۱، ۱۳۱، ۱۳۲، ۱۴۱، ۱۵۱</td>
-                    <td class="price">۱,۴۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>M15</td>
-                    <td>تیبا، ساینا، کوییک، اطلس، سهند</td>
-                    <td class="price">۱,۸۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>M15T</td>
-                    <td>شاهین</td>
-                    <td class="price">۲,۲۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>XU7</td>
-                    <td>پرشیا، آریسان، ۴۰۵، سورن، سمند</td>
-                    <td class="price">۲,۰۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>TU3</td>
-                    <td>پژو ۲۰۶، ۲۰۷</td>
-                    <td class="price">۲,۰۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>TU5</td>
-                    <td>پرشیا، شاهین، سمند، رانا، تارا، ۲۰۶، ۲۰۷، ۴۰۵</td>
-                    <td class="price">۲,۲۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>EF7</td>
-                    <td>سمند، سورن، دنا</td>
-                    <td class="price">۲,۵۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>EF7T</td>
-                    <td>ری‌را، دنا توربو، سورن توربو</td>
-                    <td class="price">۲,۸۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>K4M</td>
-                    <td>تندر ۹۰</td>
-                    <td class="price">۲,۵۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>چینی تنفس طبیعی</td>
-                    <td>خودروهای چینی با موتور تنفس طبیعی</td>
-                    <td class="price">۲,۵۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>چینی توربو</td>
-                    <td>خودروهای چینی با موتور توربوشارژ</td>
-                    <td class="price">۲,۸۰۰,۰۰۰</td>
-                </tr>
+            <tr>
+                <td data-label="خانواده خودرو">M13</td>
+                <td data-label="مدل‌ها">پراید ۱۱۱، ۱۳۱، ۱۳۲، ۱۴۱، ۱۵۱</td>
+                <td data-label="قیمت (تومان)" class="price">۱,۴۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خانواده خودرو">M15</td>
+                <td data-label="مدل‌ها">تیبا، ساینا، کوییک، اطلس، سهند</td>
+                <td data-label="قیمت (تومان)" class="price">۱,۸۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خانواده خودرو">M15T</td>
+                <td data-label="مدل‌ها">شاهین</td>
+                <td data-label="قیمت (تومان)" class="price">۲,۲۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خانواده خودرو">XU7</td>
+                <td data-label="مدل‌ها">پرشیا، آریسان، ۴۰۵، سورن، سمند</td>
+                <td data-label="قیمت (تومان)" class="price">۲,۰۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خانواده خودرو">TU3</td>
+                <td data-label="مدل‌ها">پژو ۲۰۶، ۲۰۷</td>
+                <td data-label="قیمت (تومان)" class="price">۲,۰۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خانواده خودرو">TU5</td>
+                <td data-label="مدل‌ها">پرشیا، شاهین، سمند، رانا، تارا، ۲۰۶، ۲۰۷، ۴۰۵</td>
+                <td data-label="قیمت (تومان)" class="price">۲,۲۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خانواده خودرو">EF7</td>
+                <td data-label="مدل‌ها">سمند، سورن، دنا</td>
+                <td data-label="قیمت (تومان)" class="price">۲,۵۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خانواده خودرو">EF7T</td>
+                <td data-label="مدل‌ها">ری‌را، دنا توربو، سورن توربو</td>
+                <td data-label="قیمت (تومان)" class="price">۲,۸۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خانواده خودرو">K4M</td>
+                <td data-label="مدل‌ها">تندر ۹۰</td>
+                <td data-label="قیمت (تومان)" class="price">۲,۵۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خانواده خودرو">چینی تنفس طبیعی</td>
+                <td data-label="مدل‌ها">خودروهای چینی با موتور تنفس طبیعی</td>
+                <td data-label="قیمت (تومان)" class="price">۲,۵۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خانواده خودرو">چینی توربو</td>
+                <td data-label="مدل‌ها">خودروهای چینی با موتور توربوشارژ</td>
+                <td data-label="قیمت (تومان)" class="price">۲,۸۰۰,۰۰۰</td>
+            </tr>
             </tbody>
         </table>
     </section>
@@ -545,48 +587,48 @@
 
         <table class="pricing-table">
             <thead>
-                <tr>
-                    <th>خدمات</th>
-                    <th>مدلها</th>
-                    <th>قیمت (تومان)</th>
-                </tr>
+            <tr>
+                <th>خدمات</th>
+                <th>مدلها</th>
+                <th>قیمت (تومان)</th>
+            </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>حذف تأخیر پدال گاز</td>
-                    <td>تمام مدل‌ها</td>
-                    <td class="price">۴۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>کاتاف رگباری</td>
-                    <td>تمام مدل‌ها</td>
-                    <td class="price">۲۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>آپدیت و بازنشانی</td>
-                    <td>تمام مدل‌ها</td>
-                    <td class="price">۲۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>حذف خطای کاذب</td>
-                    <td>تمام مدل‌ها</td>
-                    <td class="price">۲۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>دیاگ، عیب‌یابی و حذف خطا</td>
-                    <td>تمام مدل‌ها</td>
-                    <td class="price">۲۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>اصلاح ایرادات نرم‌افزاری</td>
-                    <td>تمام مدل‌ها</td>
-                    <td class="price">۲۰۰,۰۰۰</td>
-                </tr>
-                <tr>
-                    <td>اصلاح دمای آب</td>
-                    <td>تمام مدل‌ها</td>
-                    <td class="price">۲۰۰,۰۰۰</td>
-                </tr>
+            <tr>
+                <td data-label="خدمات">حذف تأخیر پدال گاز</td>
+                <td data-label="مدلها">تمام مدل‌ها</td>
+                <td data-label="قیمت (تومان)" class="price">۴۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خدمات">کاتاف رگباری</td>
+                <td data-label="مدلها">تمام مدل‌ها</td>
+                <td data-label="قیمت (تومان)" class="price">۲۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خدمات">آپدیت و بازنشانی</td>
+                <td data-label="مدلها">تمام مدل‌ها</td>
+                <td data-label="قیمت (تومان)" class="price">۲۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خدمات">حذف خطای کاذب</td>
+                <td data-label="مدلها">تمام مدل‌ها</td>
+                <td data-label="قیمت (تومان)" class="price">۲۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خدمات">دیاگ، عیب‌یابی و حذف خطا</td>
+                <td data-label="مدلها">تمام مدل‌ها</td>
+                <td data-label="قیمت (تومان)" class="price">۲۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خدمات">اصلاح ایرادات نرم‌افزاری</td>
+                <td data-label="مدلها">تمام مدل‌ها</td>
+                <td data-label="قیمت (تومان)" class="price">۲۰۰,۰۰۰</td>
+            </tr>
+            <tr>
+                <td data-label="خدمات">اصلاح دمای آب</td>
+                <td data-label="مدلها">تمام مدل‌ها</td>
+                <td data-label="قیمت (تومان)" class="price">۲۰۰,۰۰۰</td>
+            </tr>
             </tbody>
         </table>
 

@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فروشگاه ریمپ سهند | خدمات و محصولات تخصصی تیونینگ خودرو</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="icon.png" type="image/png">
+    <style>
+        :root {
+            --primary-blue: #4b6cb7;
+            --dark-blue: #182848;
+            --accent-yellow: #ffc107;
+            --light-gray: #f5f7fa;
+            --medium-gray: #c3cfe2;
+            --text-dark: #343a40;
+            --text-light: #f8f9fa;
+            --border-gray: #e9ecef;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--medium-gray) 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* هدر و ناوبری */
+        header {
+            background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 5px solid var(--accent-yellow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-left: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--accent-yellow);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            transition: all 0.4s ease-in-out;
+        }
+
+        .nav-links li {
+            margin-right: 1.8rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-yellow);
+        }
+
+        .nav-links a i {
+            margin-left: 8px;
+            font-size: 0.9rem;
+        }
+
+        .active {
+            color: var(--accent-yellow) !important;
+        }
+
+        .active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-yellow);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 25px;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: linear-gradient(to bottom, var(--primary-blue), var(--dark-blue));
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 80px 30px 30px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+                width: 100%;
+            }
+
+            .nav-links a {
+                padding: 0.8rem;
+                width: 100%;
+                border-radius: 5px;
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .active::after {
+                display: none;
+            }
+
+            .active {
+                background-color: rgba(255, 193, 7, 0.2) !important;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .nav-links li {
+                opacity: 0;
+                transform: translateX(20px);
+                transition: all 0.4s ease;
+            }
+
+            .nav-links.active li {
+                opacity: 1;
+                transform: translateX(0);
+            }
+
+            .nav-links.active li:nth-child(1) { transition-delay: 0.1s; }
+            .nav-links.active li:nth-child(2) { transition-delay: 0.2s; }
+            .nav-links.active li:nth-child(3) { transition-delay: 0.3s; }
+            .nav-links.active li:nth-child(4) { transition-delay: 0.4s; }
+            .nav-links.active li:nth-child(5) { transition-delay: 0.5s; }
+        }
+
+        /* محتوای اصلی فروشگاه */
+        .shop-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        /* فیلتر سمت راست */
+        .filters-sidebar {
+            width: 250px;
+            padding: 15px;
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            margin-left: 20px;
+            height: fit-content;
+        }
+
+        .filters-sidebar h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--medium-gray);
+            color: var(--dark-blue);
+        }
+
+        .filter-group {
+            margin-bottom: 20px;
+        }
+
+        .filter-group h4 {
+            margin-bottom: 10px;
+            color: var(--primary-blue);
+            font-size: 0.9rem;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-option input {
+            margin-left: 8px;
+        }
+
+        .filter-option label {
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* محتوای اصلی محصولات */
+        .shop-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .shop-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--medium-gray);
+        }
+
+        .shop-header h2 {
+            font-size: 2rem;
+            color: var(--dark-blue);
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .shop-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-yellow);
+        }
+
+        /* بخش جستجو و مرتب‌سازی */
+        .shop-tools {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 2px solid var(--border-gray);
+            border-radius: 30px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.2);
+        }
+
+        .search-box button {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--medium-gray);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .sort-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .sort-options select {
+            padding: 10px 15px;
+            border: 2px solid var(--border-gray);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sort-options select:focus {
+            border-color: var(--primary-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.2);
+        }
+
+        /* دسته‌بندی‌ها */
+        .categories {
+            margin-bottom: 30px;
+        }
+
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category-tab {
+            padding: 10px 20px;
+            background-color: var(--light-gray);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border: 2px solid transparent;
+        }
+
+        .category-tab:hover {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .category-tab.active {
+            background-color: var(--primary-blue);
+            color: white;
+            border-color: var(--accent-yellow);
+        }
+
+        /* محصولات */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid var(--border-gray);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--accent-yellow);
+            color: var(--dark-blue);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .product-img {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+
+        .product-content {
+            padding: 15px;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--dark-blue);
+            font-weight: 600;
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .product-price {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: var(--medium-gray);
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            color: var(--accent-yellow);
+            font-size: 0.9rem;
+        }
+
+        .product-rating span {
+            color: var(--text-dark);
+            margin-right: 5px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--medium-gray);
+            margin-bottom: 15px;
+        }
+
+        .product-type {
+            background-color: var(--light-gray);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            color: var(--primary-blue);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .add-to-cart, .view-details {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .add-to-cart {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .add-to-cart:hover {
+            background-color: var(--dark-blue);
+        }
+
+        .view-details {
+            background-color: white;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+        }
+
+        .view-details:hover {
+            background-color: var(--light-gray);
+        }
+
+        /* پاورقی */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-gray);
+            background-color: white;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--primary-blue);
+            margin: 0 1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--dark-blue);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: var(--light-gray);
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-blue);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* رسپانسیو */
+        @media (max-width: 992px) {
+            .shop-container {
+                flex-direction: column;
+            }
+            
+            .filters-sidebar {
+                width: 100%;
+                margin-left: 0;
+                margin-bottom: 20px;
+                order: -1;
+            }
+            
+            .filter-options {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .shop-tools {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .sort-options {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* انیمیشن‌ها */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .product-card {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+        .product-card:nth-child(7) { animation-delay: 0.7s; }
+        .product-card:nth-child(8) { animation-delay: 0.8s; }
+    </style>
+</head>
+<body>
+<!-- هدر و ناوبری -->
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo2.png" alt="لوگوی ریمپ سهند">
+            <h1>ریمپ <span>سهند</span></h1>
+        </div>
+
+        <!-- منوی همبرگر -->
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="main.html"><i class="fas fa-home"></i> صفحه اصلی</a></li>
+            <li><a href="services.html" class="active"><i class="fas fa-cogs"></i> فروشگاه</a></li>
+            <li><a href="pricing.html"><i class="fas fa-tags"></i> نرخ‌نامه</a></li>
+            <li><a href="index.html"><i class="fas fa-calculator"></i> ماشین حساب</a></li>
+            <li><a href="faq.html"><i class="fas fa-question-circle"></i> سوالات متداول</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- محتوای اصلی فروشگاه -->
+<div class="shop-container">
+    <!-- فیلترهای سمت راست -->
+    <aside class="filters-sidebar">
+        <h3>فیلتر محصولات</h3>
+        
+        <div class="filter-group">
+            <h4>نوع محصول</h4>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-service" name="product-type" value="service" checked>
+                    <label for="filter-service">خدمات</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-part" name="product-type" value="part" checked>
+                    <label for="filter-part">لوازم تیونینگ</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <h4>نوع لوازم</h4>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-header" name="part-type" value="header" checked>
+                    <label for="filter-header">هدرز</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-manifold" name="part-type" value="manifold" checked>
+                    <label for="filter-manifold">منیفولد هوا</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-filter" name="part-type" value="filter" checked>
+                    <label for="filter-filter">فیلتر مکش</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-spark" name="part-type" value="spark" checked>
+                    <label for="filter-spark">شمع</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-camshaft" name="part-type" value="camshaft" checked>
+                    <label for="filter-camshaft">میل سوپاپ</label>
+                </div>
+            </div>
+        </div>
+        
+        <div class="filter-group">
+            <h4>موتور مناسب</h4>
+            <div class="filter-options">
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-engine1" name="engine-type" value="pride" checked>
+                    <label for="filter-engine1">پراید</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-engine2" name="engine-type" value="peugeot" checked>
+                    <label for="filter-engine2">پژو</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-engine3" name="engine-type" value="tiba" checked>
+                    <label for="filter-engine3">تیبا</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="filter-engine4" name="engine-type" value="foreign" checked>
+                    <label for="filter-engine4">خارجی</label>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- محتوای اصلی -->
+    <main class="shop-content">
+        <div class="shop-header">
+            <h2>فروشگاه تخصصی ریمپ و تیونینگ</h2>
+            <p>کیفیت بی‌نظیر، قیمت مناسب، گارانتی معتبر</p>
+        </div>
+
+        <div class="shop-tools">
+            <div class="search-box">
+                <input type="text" placeholder="جستجوی محصولات..." id="search-input">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="sort-options">
+                <select id="sort">
+                    <option value="">مرتب‌سازی بر اساس</option>
+                    <option value="price-asc">قیمت (کم به زیاد)</option>
+                    <option value="price-desc">قیمت (زیاد به کم)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="categories">
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="all">همه محصولات</div>
+                <div class="category-tab" data-category="remap">ریمپ ایسیو</div>
+                <div class="category-tab" data-category="diagnostics">عیب‌یابی</div>
+                <div class="category-tab" data-category="tuning">تیونینگ</div>
+            </div>
+        </div>
+
+        <div class="products-grid" id="products-container">
+            <!-- محصولات از طریق JavaScript بارگذاری می‌شوند -->
+        </div>
+    </main>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="services.html">خدمات ما</a>
+        <a href="pricing.html">نرخ‌نامه</a>
+        <a href="calculator.html">ماشین حساب</a>
+        <a href="contact.html">تماس با ما</a>
+    </div>
+
+    <div class="social-links">
+        <a href="https://www.instagram.com/remapsahand/"><i class="fab fa-instagram"></i></a>
+        <a href="https://t.me/pkhtami"><i class="fab fa-telegram"></i></a>
+        <a href="https://api.whatsapp.com/send/?phone=989308139944&text&app_absent=0"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+989308139944"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://www.google.com/maps?q=37.9286925311032,46.12345242158474"><i class="fa-solid fa-location-dot"></i></a>
+    </div>
+
+    <p>طراحی شده توسط تیم فنی سهند © ۱۴۰۲</p>
+</footer>
+
+<script>
+    // اسکریپت برای منوی همبرگر
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+
+        if (navLinks.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
+    // داده‌های محصولات از فایل متنی (شبیه‌سازی شده)
+    const productsData = [
+        {
+            id: 1,
+            name: "پکیج ریمپ ایسیو کامل",
+            description: "افزایش قدرت + بهینه‌سازی مصرف سوخت",
+            fullDescription: "این سرویس شامل ریمپ کامل ایسیو خودرو با افزایش قدرت تا 20% و کاهش مصرف سوخت تا 15% می‌باشد. مناسب برای تمامی خودروهای داخلی و خارجی.",
+            price: 4500000,
+            oldPrice: 5200000,
+            rating: 4.8,
+            inStock: true,
+            category: "remap",
+            productType: "service",
+            partType: "",
+            engineType: ["pride", "peugeot", "tiba", "foreign"],
+            image: "https://images.unsplash.com/photo-1568624767645-9af9b8f5b054?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80",
+            badge: "پرفروش"
+        },
+        {
+            id: 2,
+            name: "خدمات دیاگ و عیب‌یابی پیشرفته",
+            description: "تشخیص و رفع مشکلات موتور و سیستم‌های الکترونیکی",
+            fullDescription: "خدمات دیاگ پیشرفته با استفاده از جدیدترین دستگاه‌های تشخیص عیب برای شناسایی دقیق مشکلات موتور و سیستم‌های الکترونیکی خودرو.",
+            price: 1200000,
+            oldPrice: 0,
+            rating: 4.6,
+            inStock: false,
+            category: "diagnostics",
+            productType: "service",
+            partType: "",
+            engineType: ["pride", "peugeot", "tiba", "foreign"],
+            image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80",
+            badge: "جدید"
+        },
+        {
+            id: 3,
+            name: "منیفولد هوا اسپرت برای پراید",
+            description: "افزایش 15% قدرت موتور",
+            fullDescription: "منیفولد هوا اسپرت با طراحی بهینه برای افزایش جریان هوا و بهبود عملکرد موتور پراید. افزایش 15% قدرت و 10% گشتاور در دورهای پایین.",
+            price: 2800000,
+            oldPrice: 3500000,
+            rating: 4.3,
+            inStock: true,
+            category: "tuning",
+            productType: "part",
+            partType: "manifold",
+            engineType: ["pride"],
+            image: "https://images.unsplash.com/photo-1554744512-d6c603f27a54?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80",
+            badge: ""
+        },
+        {
+            id: 4,
+            name: "فیلتر هوای اسپرت قابل شستشو",
+            description: "مناسب تمامی خودروها - افزایش جریان هوا",
+            fullDescription: "فیلتر هوای اسپرت با قابلیت شستشو و استفاده مجدد. افزایش جریان هوا تا 30% نسبت به فیلترهای استاندارد. مناسب برای تمامی خودروهای داخلی و خارجی.",
+            price: 850000,
+            oldPrice: 1100000,
+            rating: 4.7,
+            inStock: true,
+            category: "tuning",
+            productType: "part",
+            partType: "filter",
+            engineType: ["pride", "peugeot", "tiba", "foreign"],
+            image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80",
+            badge: "ویژه"
+        },
+        {
+            id: 5,
+            name: "شمع‌های پلاتینیومی NGK",
+            description: "افزایش شتاب و کاهش مصرف سوخت",
+            fullDescription: "شمع‌های پلاتینیومی NGK با کیفیت بالا برای بهبود احتراق و افزایش شتاب خودرو. کاهش مصرف سوخت تا 5% و افزایش عمر مفید موتور.",
+            price: 1300000,
+            oldPrice: 0,
+            rating: 4.5,
+            inStock: true,
+            category: "tuning",
+            productType: "part",
+            partType: "spark",
+            engineType: ["pride", "peugeot", "tiba", "foreign"],
+            image: "https://images.unsplash.com/photo-1601362840469-51e4d8d58785?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80",
+            badge: ""
+        },
+        {
+            id: 6,
+            name: "میل سوپاپ اسپرت 272 درجه",
+            description: "افزایش قدرت موتور در دورهای بالا",
+            fullDescription: "میل سوپاپ اسپرت با درجه 272 برای افزایش قدرت موتور در دورهای بالا. مناسب برای خودروهای پژو 206 و 405 با موتور TU.",
+            price: 3200000,
+            oldPrice: 4000000,
+            rating: 4.4,
+            inStock: true,
+            category: "tuning",
+            productType: "part",
+            partType: "camshaft",
+            engineType: ["peugeot"],
+            image: "https://images.unsplash.com/photo-1551830820-330a71b99659?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80",
+            badge: "تخفیف"
+        },
+        {
+            id: 7,
+            name: "هدرز استیل 4-2-1",
+            description: "افزایش گشتاور در دور پایین",
+            fullDescription: "هدرز استیل با طراحی 4-2-1 برای افزایش گشتاور موتور در دورهای پایین. مناسب برای خودروهای تیبا و ساینا. افزایش 12% گشتاور در محدوده 2000-4000 دور.",
+            price: 4500000,
+            oldPrice: 0,
+            rating: 4.9,
+            inStock: true,
+            category: "tuning",
+            productType: "part",
+            partType: "header",
+            engineType: ["tiba"],
+            image: "https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80",
+            badge: ""
+        },
+        {
+            id: 8,
+            name: "ریمپ حرفه‌ای ایسیو + تنظیم دینامیکی",
+            description: "تنظیم دقیق روی داینامومتر",
+            fullDescription: "ریمپ حرفه‌ای ایسیو همراه با تنظیم دینامیکی روی دستگاه داینامومتر برای دستیابی به بهترین عملکرد موتور. مناسب برای خودروهای خارجی با موتورهای توربو.",
+            price: 6800000,
+            oldPrice: 0,
+            rating: 5.0,
+            inStock: false,
+            category: "remap",
+            productType: "service",
+            partType: "",
+            engineType: ["foreign"],
+            image: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80",
+            badge: "پیشنهاد"
+        }
+    ];
+
+    // تابع برای نمایش محصولات
+    function renderProducts(products) {
+        const productsContainer = document.getElementById('products-container');
+        productsContainer.innerHTML = '';
+
+        products.forEach((product, index) => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.dataset.category = product.category;
+            productCard.dataset.productType = product.productType;
+            productCard.dataset.partType = product.partType;
+            productCard.dataset.engineType = product.engineType.join(' ');
+            
+            productCard.innerHTML = `
+                ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                <div class="product-img">
+                    <img src="${product.image}" alt="${product.name}">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">${product.name}</h3>
+                    <p>${product.description}</p>
+                    <div class="product-price">
+                        <div>
+                            <span class="price">${product.price.toLocaleString()} تومان</span>
+                            ${product.oldPrice ? `<span class="old-price">${product.oldPrice.toLocaleString()} تومان</span>` : ''}
+                        </div>
+                        <div class="product-rating">
+                            <span>${product.rating}</span>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="product-meta">
+                        <span><i class="fas fa-${product.inStock ? 'check' : 'clock'}-circle"></i> ${product.inStock ? 'موجود در انبار' : 'قابل رزرو'}</span>
+                        <span class="product-type">${product.productType === 'service' ? 'خدمات' : 'لوازم'}</span>
+                    </div>
+                    <div class="product-actions">
+                        <button class="add-to-cart" onclick="window.location.href='https://example.com/buy/${product.id}'">
+                            <i class="fas fa-shopping-cart"></i> خرید
+                        </button>
+                        <button class="view-details" data-product-id="${product.id}">
+                            <i class="fas fa-info-circle"></i> جزئیات
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // تنظیم انیمیشن
+            productCard.style.animationDelay = `${0.1 + index * 0.1}s`;
+            productsContainer.appendChild(productCard);
+        });
+
+        // اضافه کردن رویداد برای دکمه جزئیات
+        document.querySelectorAll('.view-details').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.dataset.productId;
+                const product = productsData.find(p => p.id == productId);
+                showProductDetails(product);
+            });
+        });
+    }
+
+    // تابع برای نمایش جزئیات محصول
+    function showProductDetails(product) {
+        // در اینجا می‌توانید یک مودال یا صفحه جدید برای نمایش جزئیات ایجاد کنید
+        alert(`جزئیات محصول:\n\nنام: ${product.name}\n\nتوضیحات کامل: ${product.fullDescription}\n\nقیمت: ${product.price.toLocaleString()} تومان`);
+    }
+
+    // تابع برای فیلتر کردن محصولات
+    function filterProducts() {
+        const selectedCategory = document.querySelector('.category-tab.active').dataset.category;
+        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+        const sortValue = document.getElementById('sort').value;
+        
+        // فیلترهای سمت راست
+        const selectedProductTypes = Array.from(document.querySelectorAll('input[name="product-type"]:checked')).map(el => el.value);
+        const selectedPartTypes = Array.from(document.querySelectorAll('input[name="part-type"]:checked')).map(el => el.value);
+        const selectedEngineTypes = Array.from(document.querySelectorAll('input[name="engine-type"]:checked')).map(el => el.value);
+
+        let filteredProducts = productsData.filter(product => {
+            // فیلتر بر اساس دسته‌بندی اصلی
+            const categoryMatch = selectedCategory === 'all' || product.category === selectedCategory;
+            
+            // فیلتر بر اساس جستجو
+            const searchMatch = product.name.toLowerCase().includes(searchTerm) || 
+                              product.description.toLowerCase().includes(searchTerm);
+            
+            // فیلتر بر اساس نوع محصول (خدمات/لوازم)
+            const productTypeMatch = selectedProductTypes.includes(product.productType);
+            
+            // فیلتر بر اساس نوع لوازم (اگر محصول لوازم باشد)
+            const partTypeMatch = product.productType === 'service' || 
+                                 selectedPartTypes.includes(product.partType);
+            
+            // فیلتر بر اساس نوع موتور
+            const engineTypeMatch = product.engineType.some(engine => selectedEngineTypes.includes(engine));
+            
+            return categoryMatch && searchMatch && productTypeMatch && partTypeMatch && engineTypeMatch;
+        });
+
+        // مرتب‌سازی
+        if (sortValue === 'price-asc') {
+            filteredProducts.sort((a, b) => a.price - b.price);
+        } else if (sortValue === 'price-desc') {
+            filteredProducts.sort((a, b) => b.price - a.price);
+        }
+
+        renderProducts(filteredProducts);
+    }
+
+    // رویدادهای فیلتر و جستجو
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            filterProducts();
+        });
+    });
+
+    document.getElementById('search-input').addEventListener('input', filterProducts);
+    document.getElementById('sort').addEventListener('change', filterProducts);
+    
+    document.querySelectorAll('input[name="product-type"], input[name="part-type"], input[name="engine-type"]').forEach(input => {
+        input.addEventListener('change', filterProducts);
+    });
+
+    // بارگذاری اولیه محصولات
+    renderProducts(productsData);
+</script>
+</body>
+</html>
