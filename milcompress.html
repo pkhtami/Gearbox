@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مبدل هوشمند اسب بخار و گشتاور</title>
+    <title>محاسبه افت فشار کمپرس</title>
     <link rel="icon" href="icon.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -16,6 +16,7 @@
             --text-dark: #343a40;
             --text-light: #f8f9fa;
             --border-gray: #e9ecef;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
 
         * {
@@ -30,6 +31,8 @@
             color: var(--text-dark);
             line-height: 1.6;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* هدر و ناوبری */
@@ -149,59 +152,18 @@
             transform: translateY(-11px) rotate(-45deg);
         }
 
-        @media (max-width: 992px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 80%;
-                max-width: 300px;
-                height: 100vh;
-                background: linear-gradient(to bottom, var(--primary-blue), var(--dark-blue));
-                flex-direction: column;
-                align-items: flex-start;
-                padding: 80px 30px 30px;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
-                z-index: 1000;
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .nav-links li {
-                margin: 1rem 0;
-                width: 100%;
-            }
-
-            .nav-links a {
-                padding: 0.8rem;
-                width: 100%;
-                border-radius: 5px;
-            }
-
-            .nav-links a:hover {
-                background-color: rgba(255, 255, 255, 0.1);
-            }
-
-            .active::after {
-                display: none;
-            }
-
-            .active {
-                background-color: rgba(255, 193, 7, 0.2) !important;
-            }
+        /* استایل‌های ماشین حساب */
+        .calculator-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
         }
 
-        /* استایل‌های ماشین حساب */
         .container {
             width: 90%;
             max-width: 600px;
-            margin: 30px auto;
             background-color: white;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -219,43 +181,6 @@
             padding: 25px;
         }
 
-        .conversion-type {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            border: 1px solid #e9ecef;
-            gap: 20px;
-        }
-
-        .conversion-option {
-            display: flex;
-            align-items: center;
-            padding: 8px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .conversion-option:hover {
-            background-color: #e9ecef;
-        }
-
-        .conversion-option input {
-            margin-left: 8px;
-            cursor: pointer;
-        }
-
-        .conversion-option label {
-            cursor: pointer;
-            margin-bottom: 0;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-
         .form-group {
             margin-bottom: 20px;
         }
@@ -267,7 +192,7 @@
             color: var(--text-dark);
         }
 
-        input {
+        input, select {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #ddd;
@@ -277,7 +202,7 @@
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        input:focus {
+        input:focus, select:focus {
             border-color: var(--primary-blue);
             box-shadow: 0 0 0 3px rgba(75, 108, 183, 0.2);
             outline: none;
@@ -307,36 +232,44 @@
             transform: translateY(0);
         }
 
-        .input-section {
-            display: none;
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        .active-section {
-            display: block;
-        }
-
         .result {
             margin-top: 25px;
             padding: 20px;
-            background-color: #f8f9fa;
+            background-color: var(--light-gray);
             border-radius: 10px;
-            text-align: center;
-            font-weight: bold;
             display: none;
             animation: fadeIn 0.5s ease forwards;
             border-right: 4px solid var(--primary-blue);
         }
 
-        .result-value {
-            font-size: 24px;
-            color: var(--primary-blue);
-            margin: 5px 0;
+        .result-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .unit {
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .result-item strong {
+            color: var(--primary-blue);
+        }
+
+        .result-item span {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .info-text {
+            font-size: 0.85rem;
             color: #6c757d;
-            font-size: 16px;
+            margin-top: 5px;
         }
 
         /* فوتر */
@@ -398,39 +331,62 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @media (max-width: 768px) {
-            .container {
-                width: 95%;
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
             }
 
-            .conversion-type {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: linear-gradient(to bottom, var(--primary-blue), var(--dark-blue));
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 80px 30px 30px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
             }
 
-            .conversion-option {
-                margin-bottom: 0;
-                padding: 8px 12px;
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+                width: 100%;
+            }
+
+            .nav-links a {
+                padding: 0.8rem;
+                width: 100%;
+                border-radius: 5px;
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .active::after {
+                display: none;
+            }
+
+            .active {
+                background-color: rgba(255, 193, 7, 0.2) !important;
             }
         }
 
-        @media (max-width: 480px) {
-            .conversion-type {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .conversion-option {
-                width: 100%;
-                justify-content: center;
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
             }
         }
     </style>
 </head>
 <body>
-<!-- هدر و ناوبری -->
 <header>
     <nav class="navbar">
         <div class="logo">
@@ -448,56 +404,54 @@
             <li><a href="index.html"><i class="fas fa-home"></i> صفحه اصلی</a></li>
             <li><a href="services.html"><i class="fas fa-cogs"></i> خدمات ما</a></li>
             <li><a href="pricing.html"><i class="fas fa-tags"></i> خدمات ریمپ</a></li>
-            <li><a href="calculation.html" class="active"><i class="fas fa-calculator"></i> ماشین حساب</a></li>
+            <li><a href="compression-calculator.html" class="active"><i class="fas fa-calculator"></i> ماشین حساب</a></li>
             <li><a href="faq.html"><i class="fas fa-question-circle"></i> سوالات متداول</a></li>
         </ul>
     </nav>
 </header>
 
-<!-- محتوای اصلی -->
-<div class="container">
-    <div class="content">
-        <div class="conversion-type">
-            <div class="conversion-option">
-                <input type="radio" id="torqueToHp" name="conversionType" value="torqueToHp" checked onclick="toggleInputs()">
-                <label for="torqueToHp">گشتاور به اسب بخار</label>
-            </div>
-            <div class="conversion-option">
-                <input type="radio" id="hpToTorque" name="conversionType" value="hpToTorque" onclick="toggleInputs()">
-                <label for="hpToTorque">اسب بخار به گشتاور</label>
-            </div>
-        </div>
+<div class="calculator-container">
+    <div class="container">
+        <div class="content">
 
-        <div id="torqueToHpSection" class="input-section active-section">
+
             <div class="form-group">
-                <label for="torqueNm">گشتاور (نیوتن متر)</label>
-                <input type="number" id="torqueNm" placeholder="مثال: 300">
+                <label for="deltaDuration">
+                    تغییر دوریشن میل‌سوپاپ (درجه)
+                </label>
+                <input type="number" id="deltaDuration" placeholder="مثال: 15" step="0.1" min="0">
+                <p class="info-text">مقدار تغییر دوریشن بر حسب درجه (مثال: 15 درجه)</p>
             </div>
 
             <div class="form-group">
-                <label for="rpm1">دور موتور (RPM)</label>
-                <input type="number" id="rpm1" placeholder="مثال: 6000">
+                <label for="valveCount">
+                    تعداد سوپاپ‌ها
+                </label>
+                <select id="valveCount">
+                    <option value="8">8 سوپاپ</option>
+                    <option value="12">12 سوپاپ</option>
+                    <option value="16" selected>16 سوپاپ</option>
+                    <option value="20">20 سوپاپ</option>
+                    <option value="24">24 سوپاپ</option>
+                </select>
+                <p class="info-text">تعداد کل سوپاپ‌های موتور را انتخاب کنید</p>
             </div>
-        </div>
 
-        <div id="hpToTorqueSection" class="input-section">
-            <div class="form-group">
-                <label for="hp">اسب بخار (HP)</label>
-                <input type="number" id="hp" placeholder="مثال: 200">
+            <button onclick="calculateCompressionDrop()">
+                <i class="fas fa-calculator" style="margin-left: 8px;"></i>
+                محاسبه افت فشار
+            </button>
+
+            <div id="result" class="result">
+                <div class="result-item">
+                    <strong>افت فشار کمپرس:</strong>
+                    <span id="compressionDrop"></span>
+                </div>
+                <div class="result-item">
+                    <strong>نسبت افت فشار:</strong>
+                    <span id="dropPercentage"></span>
+                </div>
             </div>
-
-            <div class="form-group">
-                <label for="rpm2">دور موتور (RPM)</label>
-                <input type="number" id="rpm2" placeholder="مثال: 5000">
-            </div>
-        </div>
-
-        <button onclick="calculate()">محاسبه</button>
-
-        <div id="result" class="result">
-            <div>نتیجه محاسبه:</div>
-            <div class="result-value" id="resultValue"></div>
-            <div class="unit" id="resultUnit"></div>
         </div>
     </div>
 </div>
@@ -506,7 +460,7 @@
     <div class="footer-links">
         <a href="services.html">خدمات ما</a>
         <a href="pricing.html">خدمات ریمپ</a>
-        <a href="calculator.html">ماشین حساب</a>
+        <a href="compression-calculator.html">ماشین حساب کمپرس</a>
         <a href="contact.html">تماس با ما</a>
     </div>
 
@@ -545,50 +499,33 @@
         });
     });
 
-    function toggleInputs() {
-        const torqueToHpChecked = document.getElementById('torqueToHp').checked;
+    // اسکریپت ماشین حساب افت فشار کمپرس
+    function calculateCompressionDrop() {
+        const deltaDuration = parseFloat(document.getElementById('deltaDuration').value);
+        const valveCount = parseInt(document.getElementById('valveCount').value);
 
-        document.getElementById('torqueToHpSection').classList.toggle('active-section', torqueToHpChecked);
-        document.getElementById('hpToTorqueSection').classList.toggle('active-section', !torqueToHpChecked);
-
-        // پاک کردن نتایج قبلی هنگام تغییر حالت
-        const resultDiv = document.getElementById('result');
-        resultDiv.style.display = 'none';
-        resultDiv.style.animation = 'none';
-    }
-
-    function calculate() {
-        const torqueToHpChecked = document.getElementById('torqueToHp').checked;
-        let result, unit;
-
-        if (torqueToHpChecked) {
-            const torqueNm = parseFloat(document.getElementById('torqueNm').value);
-            const rpm = parseFloat(document.getElementById('rpm1').value);
-
-            if (isNaN(torqueNm) || isNaN(rpm)) {
-                alert("لطفاً مقادیر گشتاور و دور موتور را وارد کنید");
-                return;
-            }
-
-            result = (torqueNm * rpm) / 7127;
-            unit = "اسب بخار (HP)";
-        } else {
-            const hp = parseFloat(document.getElementById('hp').value);
-            const rpm = parseFloat(document.getElementById('rpm2').value);
-
-            if (isNaN(hp) || isNaN(rpm)) {
-                alert("لطفاً مقادیر اسب بخار و دور موتور را وارد کنید");
-                return;
-            }
-
-            result = (hp * 7127) / rpm;
-            unit = "نیوتن متر (Nm)";
+        if (!deltaDuration || deltaDuration <= 0) {
+            alert("لطفاً مقدار تغییر دوریشن را به درستی وارد کنید");
+            return;
         }
 
-        document.getElementById('resultValue').textContent = result.toFixed(2);
-        document.getElementById('resultUnit').textContent = unit;
+        // محاسبات بر اساس تابع ارائه شده
+        const k = 0.666;
+        const a = 0.1;
+        const b = 1.5;
 
-        // نمایش بخش نتایج با انیمیشن
+        const valveFactor = 1 + a * (valveCount - 8);
+        const deltaP = k * deltaDuration * Math.pow(valveFactor, b);
+
+        // محاسبه درصد افت فشار (فرضی)
+        const baseCompression = 150; // مقدار فرضی فشار اولیه
+        const dropPercent = (deltaP / baseCompression) * 100;
+
+        // نمایش نتایج
+        document.getElementById('compressionDrop').textContent = deltaP.toFixed(2) + " psi";
+        document.getElementById('dropPercentage').textContent = dropPercent.toFixed(1) + " درصد";
+
+        // نمایش نتیجه
         const resultDiv = document.getElementById('result');
         resultDiv.style.display = 'block';
         resultDiv.style.animation = 'none';
@@ -597,11 +534,11 @@
         }, 10);
     }
 
-    // امکان استفاده از کلید Enter برای محاسبه
+    // فعال کردن محاسبه با کلید Enter
     document.querySelectorAll('input').forEach(input => {
         input.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                calculate();
+                calculateCompressionDrop();
             }
         });
     });

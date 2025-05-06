@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ماشین حساب ریمپ سهند</title>
+    <title>ریمپ سهند | تخصصی‌ترین خدمات ریمپ و تیونینگ خودرو</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="icon.png" type="image/png">
     <link rel="icon" href="icon.png" type="image/png">
     <style>
         :root {
@@ -224,7 +223,7 @@
         /* محتوای اصلی */
         .container {
             width: 90%;
-            max-width: 800px;
+            max-width: 1200px;
             margin: 30px auto;
             background-color: white;
             border-radius: 15px;
@@ -232,59 +231,150 @@
             overflow: hidden;
         }
 
-        /* استایل‌های ماشین حساب */
-        .calc-header {
-            background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
-            color: white;
-            padding: 20px;
+        .hero {
+            padding: 4rem 2rem;
             text-align: center;
-            border-bottom: 5px solid var(--accent-yellow);
+            background: linear-gradient(rgba(75, 108, 183, 0.9), rgba(24, 40, 72, 0.9)),
+            url('https://images.unsplash.com/photo-1494972308805-463bc619d34e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1280&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
         }
 
-        .calc-header h1 {
-            margin: 0;
-            font-size: 28px;
-            font-weight: 700;
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
 
-        .subtitle {
-            font-size: 16px;
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
             opacity: 0.9;
-            margin-top: 5px;
         }
 
-        .file-list {
-            list-style-type: none;
-            padding: 20px;
-            margin: 0;
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-yellow);
+            color: var(--dark-blue);
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent-yellow);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .file-item {
-            padding: 15px 20px;
-            margin: 10px 0;
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--accent-yellow);
+        }
+
+        /* بخش خدمات */
+        .services {
+            padding: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--medium-gray);
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--dark-blue);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-yellow);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .service-card {
             background-color: var(--light-gray);
             border-radius: 8px;
-            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             border-right: 4px solid var(--primary-blue);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-img {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .service-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .service-card:hover .service-img img {
+            transform: scale(1.05);
+        }
+
+        .service-content {
+            padding: 1.5rem;
+        }
+
+        .service-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark-blue);
             display: flex;
             align-items: center;
         }
 
-        .file-item:hover {
-            background-color: #e9ecef;
-            transform: translateX(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .file-item i {
+        .service-content h3 i {
             margin-left: 10px;
             color: var(--primary-blue);
         }
 
-        .file-name {
-            font-weight: 600;
+        .service-content p {
+            margin-bottom: 1.5rem;
             color: var(--text-dark);
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-blue);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--dark-blue);
+        }
+
+        .read-more i {
+            margin-right: 5px;
         }
 
         /* فوتر */
@@ -343,8 +433,12 @@
 
         /* رسپانسیو */
         @media (max-width: 768px) {
-            .calc-header h1 {
-                font-size: 24px;
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
             }
 
             .container {
@@ -371,10 +465,10 @@
         </div>
 
         <ul class="nav-links">
-            <li><a href="main.html"><i class="fas fa-home"></i> صفحه اصلی</a></li>
+            <li><a href="index.html" class="active"><i class="fas fa-home"></i> صفحه اصلی</a></li>
             <li><a href="services.html"><i class="fas fa-cogs"></i> خدمات ما</a></li>
-            <li><a href="pricing.html"><i class="fas fa-tags"></i> نرخ‌نامه</a></li>
-            <li><a href="index.html" class="active"><i class="fas fa-calculator"></i> ماشین حساب</a></li>
+            <li><a href="pricing.html"><i class="fas fa-tags"></i> خدمات ریمپ</a></li>
+            <li><a href="calculation.html"><i class="fas fa-calculator"></i> ماشین حساب</a></li>
             <li><a href="faq.html"><i class="fas fa-question-circle"></i> سوالات متداول</a></li>
         </ul>
     </nav>
@@ -382,19 +476,57 @@
 
 <!-- محتوای اصلی -->
 <div class="container">
-    <section class="calc-header">
-        <h1>ماشین حساب ریمپ سهند</h1>
-        <div class="subtitle">محاسبات تخصصی تنظیم موتور</div>
+    <section class="hero">
+        <h2>به ریمپ سهند خوش آمدید</h2>
+        <p>تخصصی‌ترین خدمات ریمپ ایسیو و بهینه‌سازی عملکرد موتور خودروهای داخلی و خارجی با بالاترین کیفیت</p>
+        <a href="calculator.html" class="cta-button">دستیار محاسباتی <i class="fas fa-arrow-left"></i></a>
     </section>
 
-    <ul class="file-list" id="fileList">
-        <!-- فایل ها توسط جاوااسکریپت اضافه می شوند -->
-    </ul>
+    <section class="services">
+        <div class="section-title">
+            <h2>خدمات تخصصی ما</h2>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-img">
+                    <img src="ss.jpg" alt="ریمپ ایسیو">
+                </div>
+                <div class="service-content">
+                    <h3><i class="fas fa-microchip"></i> ریمپ ایسیو</h3>
+                    <p>اصلاح تنظیمات ایسیو برای افزایش قدرت و بهینه‌سازی عملکرد موتور به همراه افزایش طول عمر موتور</p>
+                    <a href="services.html#remap" class="read-more">اطلاعات بیشتر <i class="fas fa-arrow-left"></i></a>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-img">
+                    <img src="audi.jpg" alt="تیونینگ">
+                </div>
+                <div class="service-content">
+                    <h3><i class="fas fa-tachometer-alt"></i> تیونینگ اختصاصی</h3>
+                    <p>حداکثر توان، حداقل هزینه، باکیفیت‌ترین قطعات با محاسبات دقیق و مهندسی‌شده برای بهترین نتیجه</p>
+                    <a href="services.html#tuning" class="read-more">اطلاعات بیشتر <i class="fas fa-arrow-left"></i></a>
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-img">
+                    <img src="ford.jpg" alt="دیاگ">
+                </div>
+                <div class="service-content">
+                    <h3><i class="fas fa-search"></i> دیاگ پیشرفته</h3>
+                    <p>تشخیص و رفع مشکلات موتور و سیستم‌های الکترونیکی خودرو با پیشرفته‌ترین دستگاه‌های دیاگ</p>
+                    <a href="services.html#diagnostics" class="read-more">اطلاعات بیشتر <i class="fas fa-arrow-left"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer>
         <div class="footer-links">
             <a href="services.html">خدمات ما</a>
-            <a href="pricing.html">نرخ‌نامه</a>
+            <a href="pricing.html">خدمات ریمپ</a>
             <a href="calculator.html">ماشین حساب</a>
             <a href="contact.html">تماس با ما</a>
         </div>
@@ -435,36 +567,6 @@
             navLinks.classList.remove('active');
             document.body.style.overflow = 'auto';
         });
-    });
-
-    // لیست فایل ها با نام های فارسی
-    const files = [
-        { name: "محاسبه تغییرات نسبت تراکم توسط کمپرس و برعکس", file: "CR Pressure Calculator.html" },
-        { name: "محاسبه تغییرات نسبت تراکم توسط کفتراشی", file: "cr change by trim v2.html" },
-        { name: "محاسبه کفتراشی مورد نیاز", file: "required trim.html" },
-        { name: "تبدیل توان و گشتاور", file: "hp calc.html" },
-        { name: "محاسبات گیربکس", file: "gearbox calculation.html" },
-        { name: "محاسبات تایر", file: "tire calc.html" },
-        { name: "ماشین حساب", file: "calc.html" }
-    ];
-
-    // ایجاد آیتم ها برای هر فایل
-    const fileList = document.getElementById('fileList');
-    files.forEach(item => {
-        const listItem = document.createElement('li');
-        listItem.className = 'file-item';
-
-        listItem.innerHTML = `
-            <i class="fas fa-calculator"></i>
-            <span class="file-name">${item.name}</span>
-        `;
-
-        // اضافه کردن رویداد کلیک برای باز کردن فایل
-        listItem.addEventListener('click', () => {
-            window.location.href = item.file;
-        });
-
-        fileList.appendChild(listItem);
     });
 </script>
 </body>

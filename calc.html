@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ماشین حساب</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" href="icon.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4b6cb7;
-            --secondary-color: #182848;
-            --accent-color: #ffc107;
-            --text-color: #2c3e50;
-            --light-bg: #f5f7fa;
-            --card-bg: #ffffff;
-            --error-color: #e74c3c;
-            --success-color: #2ecc71;
+            --primary-blue: #4b6cb7;
+            --dark-blue: #182848;
+            --accent-yellow: #ffc107;
+            --light-gray: #f5f7fa;
+            --medium-gray: #c3cfe2;
+            --text-dark: #343a40;
+            --text-light: #f8f9fa;
+            --border-gray: #e9ecef;
         }
 
         * {
@@ -27,35 +27,206 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--light-bg) 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--medium-gray) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* هدر و ناوبری */
+        header {
+            background: linear-gradient(to right, var(--primary-blue), var(--dark-blue));
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 5px solid var(--accent-yellow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-left: 10px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--accent-yellow);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            transition: all 0.4s ease-in-out;
+        }
+
+        .nav-links li {
+            margin-right: 1.8rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-yellow);
+        }
+
+        .nav-links a i {
+            margin-left: 8px;
+            font-size: 0.9rem;
+        }
+
+        .nav-links .active {
+            color: var(--accent-yellow) !important;
+        }
+
+        .nav-links .active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--accent-yellow);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            width: 30px;
+            height: 25px;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(11px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-11px) rotate(-45deg);
+        }
+
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: linear-gradient(to bottom, var(--primary-blue), var(--dark-blue));
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 80px 30px 30px;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links li {
+                margin: 1rem 0;
+                width: 100%;
+            }
+
+            .nav-links a {
+                padding: 0.8rem;
+                width: 100%;
+                border-radius: 5px;
+                color: white;
+            }
+
+            .nav-links a:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links .active {
+                background-color: rgba(255, 193, 7, 0.2) !important;
+                color: var(--accent-yellow) !important;
+            }
+
+            .nav-links .active::after {
+                display: none;
+            }
+        }
+
+        /* استایل‌های ماشین حساب */
+        .calculator-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            min-height: calc(100vh - 140px);
             padding: 20px;
         }
 
         .calculator {
             width: 100%;
             max-width: 400px;
-            background-color: var(--card-bg);
+            background-color: white;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
-        header {
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            color: white;
-            padding: 15px;
-            text-align: center;
-            border-bottom: 3px solid var(--accent-color);
+        .calculator:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         }
 
         .display {
             padding: 20px;
-            background-color: var(--secondary-color);
+            background-color: var(--dark-blue);
             color: white;
         }
 
@@ -76,6 +247,10 @@
             word-wrap: break-word;
             text-align: left;
             direction: ltr;
+            white-space: normal;
+            overflow: visible;
+            transition: font-size 0.2s ease;
+            line-height: 1.2;
         }
 
         .buttons {
@@ -92,8 +267,8 @@
             font-size: 20px;
             border-radius: 8px;
             cursor: pointer;
-            background-color: var(--light-bg);
-            color: var(--text-color);
+            background-color: var(--light-gray);
+            color: var(--text-dark);
             transition: all 0.2s ease;
             font-weight: bold;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -110,7 +285,7 @@
         }
 
         .operator {
-            background-color: var(--primary-color);
+            background-color: var(--primary-blue);
             color: white;
         }
 
@@ -119,8 +294,8 @@
         }
 
         .function {
-            background-color: var(--accent-color);
-            color: var(--text-color);
+            background-color: var(--accent-yellow);
+            color: var(--text-dark);
         }
 
         .function:hover {
@@ -128,7 +303,7 @@
         }
 
         .equals {
-            background-color: var(--success-color);
+            background-color: #2ecc71;
             color: white;
         }
 
@@ -137,7 +312,7 @@
         }
 
         .clear, .delete {
-            background-color: var(--error-color);
+            background-color: #e74c3c;
             color: white;
         }
 
@@ -154,6 +329,60 @@
             background-color: #8e44ad;
         }
 
+        /* فوتر */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-gray);
+            background-color: white;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--primary-blue);
+            margin: 0 1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--dark-blue);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: var(--light-gray);
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-blue);
+            color: white;
+            transform: translateY(-3px);
+        }
+
         @media (max-width: 400px) {
             button {
                 padding: 12px 0;
@@ -167,50 +396,116 @@
     </style>
 </head>
 <body>
-<div class="calculator">
-    <header>
-        <h2>ماشین حساب</h2>
-    </header>
-    <div class="display">
-        <div class="calculation-display" id="calculation"></div>
-        <div class="result-display" id="result">0</div>
-    </div>
-    <div class="buttons">
-        <button class="delete" onclick="deleteLastChar()"><i class="fas fa-backspace"></i></button>
-        <button class="clear" onclick="clearAll()">C</button>
-        <button class="operator" onclick="addToCalculation('(')">)</button>
-        <button class="operator" onclick="addToCalculation('/')">/</button>
+<!-- هدر و ناوبری -->
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo2.png" alt="لوگوی ریمپ سهند">
+            <h1>ریمپ <span>سهند</span></h1>
+        </div>
 
-        <button class="constant" onclick="addConstant('π')">π</button>
-        <button class="constant" onclick="addConstant('e')">e</button>
-        <button class="operator" onclick="addToCalculation(')')">(</button>
-        <button class="operator" onclick="addToCalculation('-')">-</button>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
 
-        <button onclick="addToCalculation('9')">9</button>
-        <button onclick="addToCalculation('8')">8</button>
-        <button onclick="addToCalculation('7')">7</button>
-        <button class="operator" onclick="addToCalculation('+')">+</button>
+        <ul class="nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i> صفحه اصلی</a></li>
+            <li><a href="services.html"><i class="fas fa-cogs"></i> خدمات ما</a></li>
+            <li><a href="pricing.html"><i class="fas fa-tags"></i> خدمات ریمپ</a></li>
+            <li><a href="calculation.html" class="active"><i class="fas fa-calculator"></i> ماشین حساب</a></li>
+            <li><a href="faq.html"><i class="fas fa-question-circle"></i> سوالات متداول</a></li>
+        </ul>
+    </nav>
+</header>
 
-        <button onclick="addToCalculation('6')">6</button>
-        <button onclick="addToCalculation('5')">5</button>
-        <button onclick="addToCalculation('4')">4</button>
-        <button class="operator" onclick="addToCalculation('×')">×</button>
+<div class="calculator-container">
+    <div class="calculator">
+        <div class="display">
+            <div class="calculation-display" id="calculation"></div>
+            <div class="result-display" id="result">0</div>
+        </div>
+        <div class="buttons">
+            <button class="delete" onclick="deleteLastChar()"><i class="fas fa-backspace"></i></button>
+            <button class="clear" onclick="clearAll()">C</button>
+            <button class="operator" onclick="addToCalculation('(')">)</button>
+            <button class="operator" onclick="addToCalculation('/')">/</button>
 
-        <button onclick="addToCalculation('3')">3</button>
-        <button onclick="addToCalculation('2')">2</button>
-        <button onclick="addToCalculation('1')">1</button>
-        <button class="operator" onclick="addPercentage()">%</button>
+            <button class="constant" onclick="addConstant('π')">π</button>
+            <button class="constant" onclick="addConstant('e')">e</button>
+            <button class="operator" onclick="addToCalculation(')')">(</button>
+            <button class="operator" onclick="addToCalculation('-')">-</button>
 
-        <button onclick="addToCalculation('.')">.</button>
-        <button onclick="addToCalculation('0')" style="grid-column: span 2;">0</button>
-        <button class="equals" onclick="calculate()">=</button>
+            <button onclick="addToCalculation('9')">9</button>
+            <button onclick="addToCalculation('8')">8</button>
+            <button onclick="addToCalculation('7')">7</button>
+            <button class="operator" onclick="addToCalculation('+')">+</button>
+
+            <button onclick="addToCalculation('6')">6</button>
+            <button onclick="addToCalculation('5')">5</button>
+            <button onclick="addToCalculation('4')">4</button>
+            <button class="operator" onclick="addToCalculation('×')">×</button>
+
+            <button onclick="addToCalculation('3')">3</button>
+            <button onclick="addToCalculation('2')">2</button>
+            <button onclick="addToCalculation('1')">1</button>
+            <button class="operator" onclick="addPercentage()">%</button>
+
+            <button onclick="addToCalculation('.')">.</button>
+            <button onclick="addToCalculation('0')" style="grid-column: span 2;">0</button>
+            <button class="equals" onclick="calculate()">=</button>
+        </div>
     </div>
 </div>
 
+<footer>
+    <div class="footer-links">
+        <a href="services.html">خدمات ما</a>
+        <a href="pricing.html">خدمات ریمپ</a>
+        <a href="calculator.html">ماشین حساب</a>
+        <a href="contact.html">تماس با ما</a>
+    </div>
+
+    <div class="social-links">
+        <a href="https://www.instagram.com/remapsahand/"><i class="fab fa-instagram"></i></a>
+        <a href="https://t.me/pkhtami"><i class="fab fa-telegram"></i></a>
+        <a href="https://api.whatsapp.com/send/?phone=989308139944&text&app_absent=0"><i class="fab fa-whatsapp"></i></a>
+        <a href="tel:+989308139944"><i class="fa-solid fa-phone"></i></a>
+        <a href="https://www.google.com/maps?q=37.9286925311032,46.12345242158474"><i class="fa-solid fa-location-dot"></i></a>
+    </div>
+
+    <p>طراحی شده توسط تیم فنی سهند © ۱۴۰۲</p>
+</footer>
+
 <script>
+    // اسکریپت برای منوی همبرگر
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+
+        if (navLinks.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navLinks.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+    });
+
     let calculation = '';
     let result = '0';
     let waitingForOperand = false;
+    let lastOperationWasEquals = false;
 
     const calculationDisplay = document.getElementById('calculation');
     const resultDisplay = document.getElementById('result');
@@ -218,21 +513,84 @@
     function updateDisplay() {
         calculationDisplay.textContent = calculation;
         resultDisplay.textContent = result;
+        
+        // Adjust font size based on content length
+        const resultLength = result.length;
+        if (resultLength > 20) {
+            resultDisplay.style.fontSize = '16px';
+            resultDisplay.style.whiteSpace = 'normal';
+        } else if (resultLength > 15) {
+            resultDisplay.style.fontSize = '18px';
+            resultDisplay.style.whiteSpace = 'normal';
+        } else if (resultLength > 12) {
+            resultDisplay.style.fontSize = '20px';
+            resultDisplay.style.whiteSpace = 'normal';
+        } else if (resultLength > 10) {
+            resultDisplay.style.fontSize = '24px';
+            resultDisplay.style.whiteSpace = 'nowrap';
+        } else if (resultLength > 8) {
+            resultDisplay.style.fontSize = '28px';
+            resultDisplay.style.whiteSpace = 'nowrap';
+        } else if (resultLength > 6) {
+            resultDisplay.style.fontSize = '32px';
+            resultDisplay.style.whiteSpace = 'nowrap';
+        } else {
+            resultDisplay.style.fontSize = '36px';
+            resultDisplay.style.whiteSpace = 'nowrap';
+        }
     }
 
     function addToCalculation(value) {
+        if (value !== '=') {
+            lastOperationWasEquals = false;
+        }
+
+        const operators = ['+', '-', '×', '/', '%', '='];
+        const lastChar = calculation.slice(-1);
+        
+        // Special handling for negative numbers
+        if (value === '-') {
+            // Allow negative at the start
+            if (calculation === '') {
+                calculation = '-';
+                result = '-';
+                updateDisplay();
+                return;
+            }
+            // Allow negative after operators
+            if (operators.includes(lastChar)) {
+                calculation += '-';
+                result = calculation;
+                updateDisplay();
+                return;
+            }
+            // Allow negative after opening parenthesis
+            if (lastChar === '(') {
+                calculation += '-';
+                result = calculation;
+                updateDisplay();
+                return;
+            }
+        }
+
+        // Normal operator handling
+        if (operators.includes(value) && operators.includes(lastChar)) {
+            return;
+        }
+
         if (waitingForOperand && isNumber(value)) {
             calculation += value;
-            result = value;
+            result = calculation;
             waitingForOperand = false;
         } else if (waitingForOperand) {
             calculation += ' ' + value + ' ';
+            result = calculation;
         } else {
             if (result === '0' && value !== '.') {
                 result = value;
                 calculation = value;
             } else {
-                result += value;
+                result = calculation + value;
                 calculation += value;
             }
         }
@@ -313,15 +671,51 @@
     }
 
     function calculate() {
+        if (lastOperationWasEquals) {
+            return;
+        }
+
         try {
             let expr = calculation
                 .replace(/×/g, '*')
                 .replace(/π/g, Math.PI.toString())
                 .replace(/e/g, Math.E.toString());
 
+            // Handle negative numbers and parentheses
+            // First, handle negative numbers at the start
+            if (expr.startsWith('-')) {
+                expr = '0' + expr;
+            }
+
+            // Handle negative numbers after operators
+            expr = expr.replace(/([\+\-\*\/])-/g, '$1(0-');
+
+            // Handle negative numbers in parentheses
+            expr = expr.replace(/\(-/g, '(0-');
+
+            // Add multiplication signs where needed
+            expr = expr.replace(/(\d+)\(/g, '$1*(');
+            expr = expr.replace(/\)(\d+)/g, ')*$1');
+            expr = expr.replace(/\)\(/g, ')*(');
+
+            // Fix parentheses order
+            let openCount = (expr.match(/\(/g) || []).length;
+            let closeCount = (expr.match(/\)/g) || []).length;
+            
+            // If there are more closing parentheses than opening ones, add opening ones at the start
+            if (closeCount > openCount) {
+                expr = '('.repeat(closeCount - openCount) + expr;
+            }
+            // If there are more opening parentheses than closing ones, add closing ones at the end
+            else if (openCount > closeCount) {
+                expr += ')'.repeat(openCount - closeCount);
+            }
+
+            // Evaluate the expression
             result = eval(expr).toString();
             calculation = '';
             waitingForOperand = false;
+            lastOperationWasEquals = true;
             updateDisplay();
         } catch (error) {
             result = 'Error';
